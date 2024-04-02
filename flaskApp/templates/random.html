@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random recipe</title>
+</head>
+<body>
+    <h1>Random Recipe</h1>
+    <h3>Title: {{recipe.title}}</h3>
+    <h4>ID: {{recipe.id}}</h4>
+    <h4>Summary: {{recipe.summary}}</h4>
+    <a href={{recipe.website}}>website</a>
+    <h4>Instructions: {{recipe.instructions}}</h4>
+    <img src="{{ recipe.image }}" alt="No Image Available" width="200">
+    <h4>Ingredients:</h4>
+    <ul>
+        {% for recipe in recipe.ingredients %}
+            <li>
+                <h3>{{ recipe }}</h3>
+                
+            </li>
+        {% endfor %}
+
+    </ul>
+
+
+    
+</body>
+</html>

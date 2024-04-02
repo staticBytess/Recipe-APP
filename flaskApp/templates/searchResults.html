@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random recipe</title>
+</head>
+<body>
+    <h1>PantryPal</h1>
+    <h3>Search By {{selection}}</h3>
+    <ul>
+        {% for recipe in recipeList %}
+            <li>
+                <h3>{{ recipe.title }}</h3>
+                <img src="{{ recipe.image }}" alt="No Image Available" width="200">
+                <a href="/idInfo?value={{recipe.id}}">Click me</a>
+                
+            </li>
+        {% endfor %}
+
+    </ul>
+
+    
+</body>
+</html>
