@@ -1,64 +1,7 @@
 :root {
     --button-text-color: black;
+    --background-color-darker: rgb(240, 240, 240);
     --page-bckgrnd-color: white;
-}
-
-#navbar {
-    display: flex;
-    justify-content: center;
-}
-
-#search-box input[type=text] {
-    padding: 6px;
-    margin-top: 8px;
-    font-size: 20px;
-}
-
-#search-box {
-    text-align: center;
-    padding-bottom: 30px;
-}
-
-#submit-search-btn {
-    font-size: 22px;
-    border-radius: 10px;
-
-}
-
-#submit-search-btn:hover {
-    background-color: rgb(209, 209, 209);
-    transform: translateY(-1px);
-}
-
-.nav-items {
-    float: left;
-    overflow: hidden;
-}
-
-.nav-items-content {
-    display: none;
-    position: absolute;
-    background-color: var(--page-bckgrnd-color);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.nav-items-content a {
-    padding: 12px 16px;
-    color: var(--button-text-color);
-    text-align: left;
-    text-decoration: none;
-    display: block;
-}
-
-.nav-items-content a:hover {
-    background-color: var(--page-bckgrnd-color);
-    color: var(--button-text-color);
-}
-
-.nav-items:hover .nav-items-content {
-    display: block;
 }
 
 header {
@@ -74,16 +17,16 @@ body {
 }
 
 button {
-    background-color: var(--page-bckgrnd-color);
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: var(--background-color-darker);
     color: var(--button-text-color);
     padding: 16px;
-    font-size: 20px;
-    border: none;
-    text-decoration: none;
 }
 
 button:hover {
-    text-decoration: underline;
+    background-color: rgb(209, 209, 209);
+    transform: translateY(-1px);
     text-decoration-thickness: 3px;
     text-decoration-color: rgb(123, 157, 174);
     cursor: pointer
