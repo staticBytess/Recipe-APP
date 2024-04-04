@@ -14,16 +14,15 @@
         <input type="text" id="data_input" name="data_input">
         <button type="submit">Submit</button>
     </form>
-    <br><a href="/random"><button>Get Random Recipe</button></a><br><br>
+    <h2>Click For Random Recipe</h2>
+    <a href="/random"><button>Get Random Recipe</button></a>
 </p>
 
 <p>
-    <h2>Search By Category</h2><br>
+    <h2>Search By Category</h2>
     <form action="/searchResults" method="POST" id="search-options">
-       
         <label for="search_query">Search For:</label>
         <input type="text" id="search_query" name="search_query">
-        <br>
         <label for="search_criteria">in:</label>
         <select id="search_criteria" name="search_criteria">
             <option value="ingredient">ingredient</option>
