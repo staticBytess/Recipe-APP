@@ -4,6 +4,15 @@
     --page-bckgrnd-color: white;
 }
 
+#search-options{
+    display: flex;
+    justify-content: center;
+}
+
+label{
+    padding: 0px 5px;
+}
+
 header {
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -21,7 +30,7 @@ button {
     border-radius: 10px;
     background-color: var(--background-color-darker);
     color: var(--button-text-color);
-    padding: 16px;
+    padding: 5px;
 }
 
 button:hover {
