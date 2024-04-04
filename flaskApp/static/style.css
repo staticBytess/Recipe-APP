@@ -1,0 +1,51 @@
+:root {
+    --button-text-color: black;
+    --background-color-darker: rgb(240, 240, 240);
+    --page-bckgrnd-color: white;
+}
+
+#search-options{
+    display: flex;
+    justify-content: center;
+}
+
+label{
+    padding: 0px 5px;
+    font-size: 20px
+}
+
+header {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+}
+
+h2{
+    margin-top: 30px;
+    font-size: larger;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: var(--page-bckgrnd-color);
+    text-decoration: none;
+    text-align: center;
+    font-size: 15px;
+}
+
+button {
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: var(--background-color-darker);
+    color: var(--button-text-color);
+    padding: 5px;
+    margin-left: 5px;
+}
+
+button:hover {
+    background-color: rgb(209, 209, 209);
+    transform: translateY(-1px);
+    text-decoration-thickness: 3px;
+    text-decoration-color: rgb(123, 157, 174);
+    cursor: pointer
+}

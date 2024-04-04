@@ -1,21 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import spoonacular as sp
 import json
 import requests
 from bs4 import BeautifulSoup
 from recipe import Recipe
-
-def remove_tags(html):
- 
-    # parse html content
-    soup = BeautifulSoup(html, "html.parser")
- 
-    for data in soup(['style', 'script']):
-        # Remove tags
-        data.decompose()
- 
-    # return data by retrieving the tag content
-    return ' '.join(soup.stripped_strings)
+from users import *
+from methods import *
 
 app = Flask(__name__)
 
@@ -31,40 +21,22 @@ def id():
     if request.method == 'POST':
         
         data_input = str(request.form['data_input'])
-
         
         url = f"https://api.spoonacular.com/recipes/"+data_input+"/information"
         params = {
-                    "apiKey":"dc50e9f7e4004f78a7f58d800ead2fe3",
+                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
                     
                 }
         response = requests.get(url, params)
         data = json.loads(response.text)
+        recipe = parseData(data)
 
-        id = data["id"]
-        image = data['image']
-        title = data["title"]
-        summary = remove_tags(data["summary"])
-        website = data['sourceUrl']
-        vegetarian = data['vegetarian']
-        vegan = data['vegan']
-        glutenFree = data['glutenFree']
-        image = data['image']
-        instructions = remove_tags(data['instructions'])
-
-
-        instruc = data['extendedIngredients']
-        ingredients=[]
-        for inst in instruc:
-            ingredients.append(inst['original'])
-
-        recipe = Recipe(title,id,image, summary,website,vegetarian,vegan,glutenFree,instructions,ingredients)
         return render_template("id.html", recipe = recipe)
     
 @app.route("/random")
 def random():
 
-    api = sp.API("dc50e9f7e4004f78a7f58d800ead2fe3")
+    api = sp.API("b67eb3c9d9f94a94bc7d8d966daa48fc")
 
     response = api.get_random_recipes()
         
@@ -76,32 +48,12 @@ def random():
         random = str(recepieTitle["id"])
     url = "https://api.spoonacular.com/recipes/" + random + "/information"
     params = {
-                "apiKey":"dc50e9f7e4004f78a7f58d800ead2fe3",
+                "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
                 
              }
     response = requests.get(url, params)
     data = json.loads(response.text)
-
-    id = data["id"]
-    image = data['image']
-    title = data["title"]
-    summary = remove_tags(data["summary"])
-    website = data['sourceUrl']
-    vegetarian = data['vegetarian']
-    vegan = data['vegan']
-    glutenFree = data['glutenFree']
-    image = data['image']
-    instructions = remove_tags(data['instructions'])
-
-
-    instruc = data['extendedIngredients']
-    ingredients=[]
-    for inst in instruc:
-        ingredients.append(inst['original'])
-
-
-    recipe = Recipe(title,id,image, summary,website,vegetarian,vegan,glutenFree,instructions,ingredients)
-
+    recipe = parseData(data)
     return render_template('random.html', recipe = recipe)
 
 @app.route("/idInfo", methods = ['GET', 'POST'])
@@ -112,30 +64,13 @@ def idInfo():
         
         url = f"https://api.spoonacular.com/recipes/"+value+"/information"
         params = {
-                    "apiKey":"dc50e9f7e4004f78a7f58d800ead2fe3",
+                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
                     
                 }
         response = requests.get(url, params)
         data = json.loads(response.text)
 
-        id = data["id"]
-        image = data['image']
-        title = data["title"]
-        summary = remove_tags(data["summary"])
-        website = data['sourceUrl']
-        vegetarian = data['vegetarian']
-        vegan = data['vegan']
-        glutenFree = data['glutenFree']
-        image = data['image']
-        instructions = remove_tags(data['instructions'])
-
-
-        instruc = data['extendedIngredients']
-        ingredients=[]
-        for inst in instruc:
-            ingredients.append(inst['original'])
-
-        recipe = Recipe(title,id,image, summary,website,vegetarian,vegan,glutenFree,instructions,ingredients)
+        recipe = parseData(data)
         return render_template("idInfo.html", recipe = recipe)
 
 @app.route("/searchResults", methods=['GET', 'POST'])
@@ -149,7 +84,7 @@ def search():
         if selection == "ingredient":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-                        "apiKey":"dc50e9f7e4004f78a7f58d800ead2fe3",
+                        "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
                         "query":search
                     }
 
@@ -172,7 +107,7 @@ def search():
         elif selection == "cuisine":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-                    "apiKey":"dc50e9f7e4004f78a7f58d800ead2fe3",
+                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
                     "cuisine":search,
                     "number":10
                       }
@@ -194,7 +129,7 @@ def search():
         elif selection == "diet":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-            "apiKey":"dc50e9f7e4004f78a7f58d800ead2fe3",
+            "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
             "diet":search,
             "number":10
             }
@@ -213,6 +148,34 @@ def search():
 
 
             return render_template('searchResults.html', recipeList = recipeList, selection=selection)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    
+    return render_template("login.html" )
+
+@app.route("/userdata", methods=['GET', 'POST'])
+def userdata():
+    username = str(request.form['user_name'])
+    password = str(request.form['password'])
+
+    recipeList = saved(username) 
+
+    return render_template("userdata.html", recipeList=recipeList, username = username)
+
+@app.route("/delete", methods=[ 'GET', 'POST'])
+def delete():
+    username = str(request.form['username'])
+    recipe_id= str(request.form['recipe_id'])
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
+    collection = db['favorites']
+
+    collection.delete_one({'_id': recipe_id})
+    recipeList = saved(username)
+
+    return render_template("userdata.html", recipeList=recipeList, username = username)
+
 
 
 

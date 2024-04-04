@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random recipe</title>
-</head>
-<body>
+{% extends "default.html" %}
+    {% block title %}
+    <title>Recipe Info</title>
+    {% endblock title %}
+
+    {% block content %}
     <h3>Title: {{recipe.title}}</h3>
     <h4>ID: {{recipe.id}}</h4>
     <h4>Summary: {{recipe.summary}}</h4>
@@ -22,8 +20,6 @@
         {% endfor %}
 
     </ul>
-
-
+    <a href="/"><button>Return to Home Page</button></a>
+    {% endblock content %}
     
-</body>
-</html>

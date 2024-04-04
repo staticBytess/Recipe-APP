@@ -1,0 +1,22 @@
+{% extends "default.html" %}
+    {% block title %}
+    <title>delete</title>
+    {% endblock title %}
+    {% block content %}
+    <title>delete</title>
+    <p>
+        {% for recipe in recipeList %}
+            <li>
+                <h4>{{ recipe }}</h4>
+                <form action="/userdata" method="POST">
+                    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                    <input type="hidden" name="username" value="{{username}}">
+                    <button type="submit">Delete</button>
+                </form>
+                
+            </li>
+        {% endfor %}
+
+    </p>
+    <a href="/"><button>Return to Home Page</button></a>
+    {% endblock content %}

@@ -1,36 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
-</head>
-<body>
+{% extends "default.html" %}
+    {% block title %}
+    <title>Main Page</title>
+    {% endblock title %}
+    {% block content %}
     <p>
+    <h2>Search by Recipe ID</h2>
     <form action="/id" method="POST">
         <label for="data_input">Enter Recipe ID:</label>
         <input type="text" id="data_input" name="data_input">
         <button type="submit">Submit</button>
     </form>
-    <a href="/random"><button>Get Random Recipe</button></a>
 </p>
-
+<p><a href="/random"><button>Get Random Recipe</button></a></p>
 <p>
-    <form action="/searchResults" method="POST">
-        <label for="search_criteria">Search By:</label>
+    <h2>Search By Category</h2>
+    <form action="/searchResults" method="POST" id="search-options">
+        <label for="search_criteria">Search By: </label>
         <select id="search_criteria" name="search_criteria">
-            <option value = "ingredient">ingredient</option>
+            <option value="ingredient">ingredient</option>
             <option value="diet">diet</option>
             <option values="cuisine">cuisine</option>
         </select>
-        
-        <br>
-        <label for="search_query">Search Query:</label>
+        <label for="search_query">Search For</label>
         <input type="text" id="search_query" name="search_query">
-        <br>
         <button type="submit">Search</button>
     </form>
+  
 </p>
 
-</body>
-</html>
+<p>
+    <a href="/login"><button>Log In</button></a>
+</p>
+{% endblock content %}
