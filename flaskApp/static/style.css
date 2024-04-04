@@ -19,6 +19,10 @@ header {
     font-size: larger;
 }
 
+h2{
+    margin-bottom: 2px;
+}
+
 body {
     background-color: var(--page-bckgrnd-color);
     text-decoration: none;
