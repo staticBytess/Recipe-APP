@@ -8,27 +8,28 @@
 </head>
 <body>
     <p>
+    <h2>Search by Recipe ID</h2>
     <form action="/id" method="POST">
         <label for="data_input">Enter Recipe ID:</label>
         <input type="text" id="data_input" name="data_input">
         <button type="submit">Submit</button>
     </form>
-    <a href="/random"><button>Get Random Recipe</button></a>
+    <br><a href="/random"><button>Get Random Recipe</button></a><br><br>
 </p>
 
 <p>
-    <form action="/searchResults" method="POST">
-        <label for="search_criteria">Search By:</label>
+    <h2>Search By Category</h2><br>
+    <form action="/searchResults" method="POST" id="search-options">
+       
+        <label for="search_query">Search For:</label>
+        <input type="text" id="search_query" name="search_query">
+        <br>
+        <label for="search_criteria">in:</label>
         <select id="search_criteria" name="search_criteria">
-            <option value = "ingredient">ingredient</option>
+            <option value="ingredient">ingredient</option>
             <option value="diet">diet</option>
             <option values="cuisine">cuisine</option>
         </select>
-        
-        <br>
-        <label for="search_query">Search Query:</label>
-        <input type="text" id="search_query" name="search_query">
-        <br>
         <button type="submit">Search</button>
     </form>
 </p>
