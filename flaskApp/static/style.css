@@ -11,6 +11,7 @@
 
 label{
     padding: 0px 5px;
+    font-size: 20px
 }
 
 header {
@@ -20,13 +21,16 @@ header {
 }
 
 h2{
-    margin-bottom: 2px;
+    margin-top: 30px;
+    font-size: larger;
 }
 
 body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: var(--page-bckgrnd-color);
     text-decoration: none;
     text-align: center;
+    font-size: 15px;
 }
 
 button {
@@ -35,6 +39,7 @@ button {
     background-color: var(--background-color-darker);
     color: var(--button-text-color);
     padding: 5px;
+    margin-left: 5px;
 }
 
 button:hover {
