@@ -6,7 +6,7 @@
     
     <p>
         {% for recipe in recipeList %}
-            <li>
+            <p>
                 <h4>{{ recipe }}</h4>
                 <form action="/delete" method="POST">
                     <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
@@ -16,7 +16,7 @@
                     <button type="submit">View Recipe</button>
                 </form>
                 
-            </li>
+            </p>
         {% endfor %}
 
     </p>

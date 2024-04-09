@@ -12,15 +12,15 @@
     <h4>Instructions: {{recipe.instructions}}</h4>
     <img src="{{ recipe.image }}" alt="No Image Available" width="200">
     <h4>Ingredients:</h4>
-    <ul>
+    <p>
         {% for recipe in recipe.ingredients %}
-            <li>
+            <p>
                 <h3>{{ recipe }}</h3>
                 
-            </li>
+            </p>
         {% endfor %}
 
-    </ul>
+        </p>
 
     <a href="/"><button>Return to Home Page</button></a>
     {% endblock content %}

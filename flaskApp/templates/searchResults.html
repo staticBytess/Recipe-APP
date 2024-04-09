@@ -8,12 +8,12 @@
     <h3>Search By {{selection}}</h3>
     <ul>
         {% for recipe in recipeList %}
-            <li>
+            <p>
                 <h3>{{ recipe.title }}</h3>
                 <img src="{{ recipe.image }}" alt="No Image Available" width="200">
                 <a href="/idInfo?value={{recipe.id}}">View Recipe</a>
                 
-            </li>
+            </p>
         {% endfor %}
 
     </ul>
