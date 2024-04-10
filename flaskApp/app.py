@@ -176,6 +176,23 @@ def delete():
 
     return render_template("userdata.html", recipeList=recipeList, username = username)
 
+@app.route("/addFave", methods=['GET', 'POST'])
+def addFave():
+    value = request.args.get('value')
+    
+    url = f"https://api.spoonacular.com/recipes/"+value+"/information"
+    if value is None:
+        # Handle the case where 'value' is missing, e.g., redirect to an error page
+        return "Value parameter is missing.", 400
+    params = {
+                "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                
+            }
+    response = requests.get(url, params)
+    data = json.loads(response.text)
+
+    recipe = parseData(data)
+    return render_template("addfave.html", recipe = recipe )
 
 
 
