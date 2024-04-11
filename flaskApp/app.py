@@ -200,12 +200,27 @@ def add_recipe():
     title = request.form.get("title")
     id = request.form.get("id")
     image = request.form.get("image")
+    summary = request.form.get("summary")
+    image = request.form.get("image")
+    website = request.form.get("website")
+    vegetarian= request.form.get("vegetarian")
+    vegan= request.form.get("vegan")
+    glutenFree= request.form.get("glutenFree")
+    instructions= request.form.get("instructions")
+    instruc= request.form.get("instruc")
 
     # Creates a dictionary representing the recipe data
     recipe_data = {
         "title": title,
         "id": id,
         "image": image,
+        "summary": summary,
+        "website": website,
+        "vegetarian": vegetarian,
+        "vegan": vegan,
+        "glutenFree": glutenFree,
+        "instructions": instructions,
+        "instruc": instruc,
 
     }
 
