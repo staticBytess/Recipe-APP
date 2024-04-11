@@ -11,7 +11,8 @@
             <p>
                 <h3>{{ recipe.title }}</h3>
                 <img src="{{ recipe.image }}" alt="No Image Available" width="200">
-                <a href="/idInfo?value={{recipe.id}}">View Recipe</a>
+                <a href="/idInfo?value={{recipe.id}}"><button type="submit">View Recipe</button></a>
+                <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
                 
             </p>
         {% endfor %}

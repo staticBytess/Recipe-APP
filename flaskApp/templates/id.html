@@ -6,7 +6,8 @@
     {% block content %}
     <h3>Title: {{recipe.title}}</h3>
     <h4>ID: {{recipe.id}}</h4>
-    <save-recipe></save-recipe>
+<!--<save-recipe></save-recipe>-->
+<a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
     <h4>Summary: {{recipe.summary}}</h4>
     <a href={{recipe.website}}>website</a>
     <h4>Instructions: {{recipe.instructions}}</h4>
@@ -21,6 +22,6 @@
         {% endfor %}
 
     </ul>
-<return-home></return-home>
+    <return-home></return-home>
     {% endblock content %}
     
