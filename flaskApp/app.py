@@ -179,26 +179,39 @@ def delete():
 @app.route("/addFave", methods=['GET', 'POST'])
 def addFave():
     value = request.args.get('value')
-    
     url = f"https://api.spoonacular.com/recipes/"+value+"/information"
-    if value is None:
-        # Handle the case where 'value' is missing, e.g., redirect to an error page
-        return "Value parameter is missing.", 400
+
     params = {
                 "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
-                
+
             }
+    
     response = requests.get(url, params)
     data = json.loads(response.text)
-
     recipe = parseData(data)
-    return render_template("addfave.html", recipe = recipe )
 
+    return render_template("addfave.html", recipe = recipe)
 
+@app.route("/add_recipe", methods=["POST"])
+def add_recipe():
+    username = request.form.get("user_name")
+
+    #This can probably be simplified so we do not have get each individual field
+    title = request.form.get("title")
+    id = request.form.get("id")
+    image = request.form.get("image")
+
+    # Creates a dictionary representing the recipe data
+    recipe_data = {
+        "title": title,
+        "id": id,
+        "image": image,
+
+    }
+
+    addRecipe(username, recipe_data)
+
+    return "Recipe added successfully!"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-
-
-
-
