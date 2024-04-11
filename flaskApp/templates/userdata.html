@@ -8,14 +8,22 @@
         {% for recipe in recipeList %}
             <p>
                 <h4>{{ recipe }}</h4>
-                <form action="/delete" method="POST">
-                    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                    <input type="hidden" name="username" value="{{username}}">
-                    <button type="submit">Delete</button>
-                    <button type="submit">Edit</button>
-                    <button type="submit">View Recipe</button>
-                </form>
-                
+                <div class="saved-options">
+                    <form action="/viewRecipe" method="GET">
+                        <button type="submit">View Recipe</button>
+                        <input type="hidden" name="username" value="{{username}}">
+                        <input type="hidden" name="recipe" value="{{recipe}}">
+                    </form>
+                    <form action="/edit" method="POST">
+                        <button type="submit">Edit</button>
+                        <input type="hidden" name="username" value="{{username}}">
+                    </form>
+                    <form action="/delete" method="POST">
+                        <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                        <input type="hidden" name="username" value="{{username}}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
             </p>
         {% endfor %}
 
