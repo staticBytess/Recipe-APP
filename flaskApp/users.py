@@ -12,6 +12,11 @@ def addRecipe(username, data):
     client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db["favorites"]
+
+    ingredients_string = data["ingredients"]
+    ingredients_list = eval(ingredients_string)
+    data["ingredients"] = ingredients_list
+
     title = data["title"]
     recipe = {
         "_id":title,
@@ -82,19 +87,9 @@ def saved(userName):
         
 def delete(userName, recipe):
     
-    
     client = MongoClient("mongodb://localhost:27017")
     db = client[userName]
     collection = db['favorites']
-    
-
-
-
-
-
-
-
-
 
     recDelete = re.compile(recipe, re.IGNORECASE)
     docDelete = collection.find_one({"_id": {"$regex": recDelete}})
