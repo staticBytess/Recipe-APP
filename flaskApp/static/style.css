@@ -7,6 +7,12 @@
 #search-options{
     display: flex;
     justify-content: center;
+    padding-bottom: 100px;
+}
+
+.saved-options{
+    display: flex;
+    justify-content: center;
 }
 
 label{
@@ -50,4 +56,7 @@ button:hover {
     cursor: pointer
 }
 
+form {
+    padding: 0px 5px;
+}
 
