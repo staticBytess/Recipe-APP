@@ -192,8 +192,8 @@ def addFave():
 
     return render_template("addfave.html", recipe = recipe)
 
-@app.route("/add_recipe", methods=["POST"])
-def add_recipe():
+@app.route("/addRecipe", methods=["POST"])
+def addRecipe():
     username = request.form.get("user_name")
 
     #This can probably be simplified so we do not have get each individual field
@@ -202,6 +202,7 @@ def add_recipe():
     image = request.form.get("image")
     summary = request.form.get("summary")
     image = request.form.get("image")
+    ingredients = request.form.get("ingredients")
     website = request.form.get("website")
     vegetarian= request.form.get("vegetarian")
     vegan= request.form.get("vegan")
@@ -215,6 +216,7 @@ def add_recipe():
         "id": id,
         "image": image,
         "summary": summary,
+        "ingredients": ingredients,
         "website": website,
         "vegetarian": vegetarian,
         "vegan": vegan,
@@ -227,6 +229,27 @@ def add_recipe():
     addRecipe(username, recipe_data)
 
     return "Recipe added successfully!"
+
+
+@app.route("/viewRecipe", methods=["GET"])
+def viewRecipe():
+    username = request.args.get("username") 
+    recipe = request.args.get("recipe")
+    
+    recipe = getRecipe(username, recipe)
+    
+    return render_template("viewfave.html", recipe=recipe)
+
+def getRecipe(username, recipe_title):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
+    collection = db["favorites"]
+    recipe_document = collection.find_one({"_id": recipe_title})
+    if recipe_document:
+        return recipe_document.get("data")
+    else:
+        return None
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
