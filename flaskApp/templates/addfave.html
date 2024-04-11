@@ -9,7 +9,7 @@
 <h4>ID: {{recipe.id}}</h4>
 
 <p>Enter username in order to save</p>
-<form action="/addRecipe" method="POST">
+<form action="/add_recipe" method="POST">
     <label for="User">Username:</label>
     <input type="text" id="user_name" required name="user_name">
     <input type="hidden" name="title" value="{{ recipe.title }}">

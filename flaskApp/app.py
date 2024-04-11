@@ -192,8 +192,8 @@ def addFave():
 
     return render_template("addfave.html", recipe = recipe)
 
-@app.route("/addRecipe", methods=["POST"])
-def addRecipe():
+@app.route("/add_recipe", methods=["POST"])
+def add_recipe():
     username = request.form.get("user_name")
 
     #This can probably be simplified so we do not have get each individual field
