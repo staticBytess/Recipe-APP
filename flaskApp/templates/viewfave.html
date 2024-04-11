@@ -1,0 +1,25 @@
+{% extends "default.html" %}
+{% block title %}
+<title>Recipe Info</title>
+{% endblock title %}
+
+{% block content %}
+
+    <h1>{{recipe.title}}</h1>
+    <h3>ID: {{recipe.id}}</h3>
+    <h4>Summary: {{recipe.summary}}</h4>
+    <a href={{recipe.website}}>website</a>
+    <h4>Instructions: {{recipe.instructions}}</h4>
+    <img src="{{ recipe.image }}" alt="No Image Available" width="200">
+    <h4>Ingredients:</h4>
+    <ul>
+        {% for ingredient in recipe.ingredients %}
+        <li>
+            <h3>{{ ingredient }}</h3>
+        </li>
+        {% endfor %}
+
+    </ul>
+    <return-home></return-home>
+    {% endblock content %}
+    
