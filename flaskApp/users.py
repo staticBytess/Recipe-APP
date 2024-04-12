@@ -81,7 +81,7 @@ def saved(userName):
     recipeList = []
 # Iterate over the documents and print the _id field of each document
     for document in documents:
-        recipeList.append(document['_id'])
+        recipeList.append(document)
     
     return recipeList
         
