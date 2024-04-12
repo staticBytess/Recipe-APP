@@ -11,15 +11,18 @@
 }
 
 .saved-recipe{
-    
+    font-size: large;
+    h4{
+        min-height: 50px;
+        max-height: 50px;
+        margin-bottom: 0px;
+    }
 }
 
 .recipe-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    /* Adjust the minmax value as needed */
     grid-gap: 30px;
-    /* Adjust the gap between items */
     padding-bottom: 50px;
 
 }
@@ -30,7 +33,10 @@
     justify-content: center;
 }
 
-
+.image{
+    width: 100%;
+    border-radius: inherit;
+}
 label{
     padding: 0px 5px;
     font-size: 20px
@@ -79,4 +85,8 @@ form {
 
 img{
     padding-bottom: 10px;
+    border-radius: 10px;
 }
+
+
+
