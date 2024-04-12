@@ -163,18 +163,20 @@ def userdata():
 
     return render_template("userdata.html", recipeList=recipeList, username = username)
 
-@app.route("/delete", methods=[ 'GET', 'POST'])
+@app.route("/delete", methods=['POST'])
 def delete():
-    username = str(request.form['username'])
-    recipe_id= str(request.form['recipe_id'])
+    username = request.form['username']
+    recipe_title = request.form['recipe_title']
+    
     client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db['favorites']
 
-    collection.delete_one({'_id': recipe_id})
+    collection.delete_one({"_id": recipe_title})
+
     recipeList = saved(username)
 
-    return render_template("userdata.html", recipeList=recipeList, username = username)
+    return render_template("userdata.html", recipeList = recipeList, username = username)
 
 @app.route("/addFave", methods=['GET', 'POST'])
 def addFave():
@@ -249,7 +251,6 @@ def getRecipe(username, recipe_title):
         return recipe_document.get("data")
     else:
         return None
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
