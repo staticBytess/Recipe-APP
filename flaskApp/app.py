@@ -166,13 +166,13 @@ def userdata():
 @app.route("/delete", methods=['POST'])
 def delete():
     username = request.form['username']
-    recipe_title = request.form['recipe_title']
+    recipe_id = request.form['recipe_id']
     
     client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db['favorites']
 
-    collection.delete_one({"_id": recipe_title})
+    collection.delete_one({"_id": recipe_id})
 
     recipeList = saved(username)
 
