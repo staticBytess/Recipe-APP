@@ -56,22 +56,22 @@ def random():
     recipe = parseData(data)
     return render_template('random.html', recipe = recipe)
 
-@app.route("/idInfo", methods = ['GET', 'POST'])
-def idInfo():
+# @app.route("/idInfo", methods = ['GET', 'POST'])
+# def idInfo():
     
         
-        value = request.args.get('value')
+#         value = request.args.get('value')
         
-        url = f"https://api.spoonacular.com/recipes/"+value+"/information"
-        params = {
-                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+#         url = f"https://api.spoonacular.com/recipes/"+value+"/information"
+#         params = {
+#                     "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
                     
-                }
-        response = requests.get(url, params)
-        data = json.loads(response.text)
+#                 }
+#         response = requests.get(url, params)
+#         data = json.loads(response.text)
 
-        recipe = parseData(data)
-        return render_template("idInfo.html", recipe = recipe)
+#         recipe = parseData(data)
+#         return render_template("idInfo.html", recipe = recipe)
 
 @app.route("/searchResults", methods=['GET', 'POST'])
 def search():
@@ -233,13 +233,36 @@ def add_recipe():
     return "Recipe added successfully!"
 
 
-@app.route("/viewRecipe", methods=["GET"])
-def viewRecipe():
+# @app.route("/viewRecipe", methods=["GET"])
+# def viewRecipe():
+#     username = request.args.get("username") 
+#     recipe = request.args.get("recipe")
+    
+#     recipe = getRecipe(username, recipe)
+    
+#     return render_template("viewfave.html", recipe=recipe)
+
+@app.route("/view", methods=['POST', 'GET'])
+def view():
+    
     username = request.args.get("username") 
-    recipe = request.args.get("recipe")
     
-    recipe = getRecipe(username, recipe)
-    
+    if request.method == 'GET': #if called from userdata.html
+        recipe = request.args.get("recipe")
+        recipe = getRecipe(username, recipe)
+    else: #if called from any other html
+        recipe = request.form.get('value')
+        recipe = str(recipe)
+        url = f"https://api.spoonacular.com/recipes/"+recipe+"/information"
+        params = {
+                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                    
+                }
+        response = requests.get(url, params)
+        data = json.loads(response.text)
+
+        recipe = parseData(data)
+        
     return render_template("viewfave.html", recipe=recipe)
 
 def getRecipe(username, recipe_title):
