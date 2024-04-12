@@ -4,9 +4,9 @@
     {% endblock title %}
     {% block content %}
     
-    <p>
+    <div class="recipe-grid">
         {% for recipe in recipeList %}
-            <p>
+            <div class="saved-recipe">
                 <h4>{{ recipe['_id'] }}</h4>
                 <div class="saved-options">
                     <form action="/viewRecipe" method="GET">
@@ -24,9 +24,8 @@
                         <button type="submit">Delete</button>
                     </form>
                 </div>
-            </p>
+            </div>
         {% endfor %}
-
-    </p>
+    </div>
     <return-home></return-home>
     {% endblock content %}
