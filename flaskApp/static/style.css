@@ -18,9 +18,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     /* Adjust the minmax value as needed */
-    grid-gap: 20px;
+    grid-gap: 30px;
     /* Adjust the gap between items */
     padding-bottom: 50px;
+
 }
 
 
@@ -28,6 +29,7 @@
     display: flex;
     justify-content: center;
 }
+
 
 label{
     padding: 0px 5px;
@@ -75,3 +77,6 @@ form {
     padding: 0px 5px;
 }
 
+img{
+    padding-bottom: 10px;
+}
