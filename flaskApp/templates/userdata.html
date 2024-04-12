@@ -8,6 +8,7 @@
         {% for recipe in recipeList %}
             <div class="saved-recipe">
                 <h4>{{ recipe['_id'] }}</h4>
+                <img src="{{ recipe['data']['image'] }}" alt="No Image Available" width="300" >
                 <div class="saved-options">
                     <form action="/viewRecipe" method="GET">
                         <button type="submit">View Recipe</button>
