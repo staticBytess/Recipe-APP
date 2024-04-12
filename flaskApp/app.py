@@ -263,7 +263,7 @@ def view():
 
         recipe = parseData(data)
         
-    return render_template("viewfave.html", recipe=recipe)
+    return render_template("view.html", recipe=recipe)
 
 def getRecipe(username, recipe_title):
     client = MongoClient("mongodb://localhost:27017")
