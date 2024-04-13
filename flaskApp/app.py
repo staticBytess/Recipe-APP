@@ -24,7 +24,7 @@ def id():
         
         url = f"https://api.spoonacular.com/recipes/"+data_input+"/information"
         params = {
-                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                    "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
                     
                 }
         response = requests.get(url, params)
@@ -36,7 +36,7 @@ def id():
 @app.route("/random")
 def random():
 
-    api = sp.API("b67eb3c9d9f94a94bc7d8d966daa48fc")
+    api = sp.API("9864ec4977cf4c629b1b4a5647a9e502")
 
     response = api.get_random_recipes()
         
@@ -48,7 +48,7 @@ def random():
         random = str(recepieTitle["id"])
     url = "https://api.spoonacular.com/recipes/" + random + "/information"
     params = {
-                "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
                 
              }
     response = requests.get(url, params)
@@ -84,7 +84,7 @@ def search():
         if selection == "ingredient":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-                        "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                        "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
                         "query":search
                     }
 
@@ -107,7 +107,7 @@ def search():
         elif selection == "cuisine":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                    "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
                     "cuisine":search,
                     "number":10
                       }
@@ -129,7 +129,7 @@ def search():
         elif selection == "diet":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-            "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+            "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
             "diet":search,
             "number":10
             }

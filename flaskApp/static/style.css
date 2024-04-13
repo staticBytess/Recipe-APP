@@ -98,6 +98,69 @@ button:hover {
     cursor: pointer
 }
 
+.loginBtn {
+    p {
+        position: absolute;
+        left: 90%;
+        bottom: 91.5%;
+    }
+}
+.loginImg {
+    position: absolute;
+    left: 88%;
+    top: 3%;
+}
+
+.recipeSearch {
+    position: absolute;
+    left: 60%
+}
+.recipeSearch input[type=text] {
+    font-size: 17px;
+    padding: 10px;
+}
+
+.categorySearch {
+    position: relative;
+    top: 250px;
+    overflow: hidden;
+    color: rgb(255, 255, 255);
+    padding: 14px 16px;
+    background: rgb(20, 20, 20);
+    display: inline-block;
+    width: 100%;
+    height: 85px; 
+}
+.categorySearch input[type=text] {
+    font-size: 17px;
+    float: right;
+    padding: 10px;
+
+}
+
+.showRandom {
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+}
+
+.logo {
+    h1 {
+        position: absolute;
+        left: 23%;
+        font-size: 60px;
+        bottom: 78%;
+        font-family: Tahoma;
+    }
+    img {
+        top: 8%;
+        left: 17%;
+        position: absolute;
+    }
+}
+
 form {
     padding: 0px 5px;
 }
