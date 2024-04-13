@@ -62,15 +62,9 @@ def random():
         
 #         value = request.args.get('value')
         
-<<<<<<< HEAD
-        url = f"https://api.spoonacular.com/recipes/"+value+"/information"
-        params = {
-                    "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
-=======
 #         url = f"https://api.spoonacular.com/recipes/"+value+"/information"
 #         params = {
 #                     "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
->>>>>>> bde5ff36fe07cec54facd407264297b942150d6f
                     
 #                 }
 #         response = requests.get(url, params)
@@ -190,13 +184,8 @@ def addFave():
     url = f"https://api.spoonacular.com/recipes/"+value+"/information"
 
     params = {
-<<<<<<< HEAD
-                "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
-                
-=======
                 "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
 
->>>>>>> bde5ff36fe07cec54facd407264297b942150d6f
             }
     
     response = requests.get(url, params)
