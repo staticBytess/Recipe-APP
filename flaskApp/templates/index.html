@@ -3,17 +3,19 @@
     <title>Main Page</title>
     {% endblock title %}
     {% block content %}
+
+<div class = "recipeSearch">
     <p>
-    <h2>Search by Recipe ID</h2>
     <form action="/id" method="POST">
         <label for="data_input">Enter Recipe ID:</label>
-        <input type="text" id="data_input" name="data_input">
+        <input type="text" id="data_input" name="data_input" placeholder = "Recipe ID">
         <button type="submit">Submit</button>
     </form>
-</p>
-<p><a href="/random"><button>Get Random Recipe</button></a></p>
-<p>
-    <h2>Search By Category</h2>
+    </p>
+</div>
+
+<div class = "categorySearch">
+    <p>
     <form action="/searchResults" method="POST" id="search-options">
         <label for="search_criteria">Search By: </label>
         <select id="search_criteria" name="search_criteria">
@@ -22,13 +24,37 @@
             <option values="cuisine">cuisine</option>
         </select>
         <label for="search_query">Search For</label>
-        <input type="text" id="search_query" name="search_query">
+        <input type="text" id="search_query" name="search_query" placeholder = "Ingredient, Diet, Cuisine">
         <button type="submit">Search</button>
     </form>
   
-</p>
+    </p>
+</div>
 
-<p>
-    <a href="/login"><button>Log In</button></a>
-</p>
+<div class = "loginBtn">
+    <p>
+        <a href="/login"><button>Log In</button></a>
+    </p>
+
+</div>
+
+<div class = "showRandom">
+    <p>
+    <iframe src="/random" width="70%" height="1400px" frameBorder="0">Browser not compatible.</iframe>
+    </p>
+</div>
+
+<div class = "name">
+    <h1>BugBashers</h1>
+</div>
+
+<div class = "loginImg">
+    <img src="https://cdn-icons-png.freepik.com/256/64/64572.png" alt="Login" width = "35px" height = "35px">
+</div>
+
+<div class = "logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/1397/1397128.png" alt="Logo" width = "100px" height = "100px">
+</div>
+
+
 {% endblock content %}

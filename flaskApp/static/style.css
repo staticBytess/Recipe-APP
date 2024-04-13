@@ -50,4 +50,48 @@ button:hover {
     cursor: pointer
 }
 
-
+.loginBtn {
+    position: absolute;
+    left: 90%;
+    bottom: 91.5%;
+}
+.recipeSearch {
+    position: absolute;
+    left: 60%
+}
+.categorySearch {
+    position: relative;
+    top: 250px;
+    overflow: hidden;
+    color: white;
+    background: rgb(23, 23, 23);
+    padding: 14px 16px;
+}
+.categorySearch input[type=text] {
+    font-size: 17px;
+    float: right;
+}
+.showRandom {
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+}
+.name {
+    position: absolute;
+    left: 27%;
+    font-size: 30px;
+    bottom: 78%;
+    font-family: Tahoma;
+}
+.loginImg {
+    bottom: 93%;
+    left: 87.5%;
+    position: absolute;
+}
+.logo {
+    top: 8%;
+    left: 20%;
+    position: absolute;
+}
