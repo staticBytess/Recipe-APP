@@ -7,8 +7,55 @@
 #search-options{
     display: flex;
     justify-content: center;
+    padding-bottom: 100px;
 }
 
+#recipe-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    button{
+        margin-bottom: 20px; /*seperates the button further from the image */
+    }
+
+    h3{
+        margin-top: 0px;
+        margin-bottom: 25px;
+    }
+}
+
+.saved-recipe{
+    font-size: large;
+    h4{
+        min-height: 50px;
+        max-height: 50px;
+        margin-bottom: 0px;
+    }
+    button {
+        min-width: 65px;
+    }
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 30px;
+    padding-bottom: 50px;
+
+}
+
+
+.saved-options{
+    display: flex;
+    justify-content: center;
+}
+
+.image{
+    width: 100%;
+    border-radius: inherit;
+}
 label{
     padding: 0px 5px;
     font-size: 20px
@@ -40,6 +87,7 @@ button {
     color: var(--button-text-color);
     padding: 5px;
     margin-left: 5px;
+    white-space: nowrap;
 }
 
 button:hover {
@@ -50,6 +98,7 @@ button:hover {
     cursor: pointer
 }
 
+<<<<<<< HEAD
 .loginBtn {
     position: absolute;
     left: 90%;
@@ -95,3 +144,15 @@ button:hover {
     left: 20%;
     position: absolute;
 }
+=======
+form {
+    padding: 0px 5px;
+}
+
+img{
+    padding-bottom: 10px;
+}
+
+
+
+>>>>>>> bde5ff36fe07cec54facd407264297b942150d6f

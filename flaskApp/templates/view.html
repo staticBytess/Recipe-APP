@@ -1,0 +1,35 @@
+{% extends "default.html" %}
+{% block title %}
+<title>Recipe Info</title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="recipe-header">
+    <h1>{{recipe.title}}</h1>
+    <h3>ID: {{recipe.id}}</h3>
+    {% if saved == 0 %}
+    <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
+    {% endif %}
+    <img src="{{ recipe.image }}" alt="No Image Available" width="400">
+    <a href={{recipe.website}}>website</a>
+</div>
+
+<p>
+    <b>Summary:</b>
+    {{recipe.summary}}
+</p>
+
+<p><b>Instructions:</b> {{recipe.instructions}}</p>
+
+<h3>Ingredients:</h3>
+
+<h4>
+    {% for ingredient in recipe.ingredients %}
+        <p>
+            {{ ingredient }}
+        </p>
+    {% endfor %}
+</h4>
+    <return-home></return-home>
+    {% endblock content %}

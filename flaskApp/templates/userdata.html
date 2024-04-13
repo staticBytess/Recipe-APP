@@ -4,21 +4,29 @@
     {% endblock title %}
     {% block content %}
     
-    <p>
+    <div class="recipe-grid">
         {% for recipe in recipeList %}
-            <p>
-                <h4>{{ recipe }}</h4>
-                <form action="/delete" method="POST">
-                    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                    <input type="hidden" name="username" value="{{username}}">
-                    <button type="submit">Delete</button>
-                    <button type="submit">Edit</button>
-                    <button type="submit">View Recipe</button>
-                </form>
-                
-            </p>
+            <div class="saved-recipe">
+                <h4>{{ recipe['_id'] }}</h4>
+                <img src="{{ recipe['data']['image'] }}" alt="No Image Available" width="300">
+                <div class="saved-options">
+                    <form action="/view" method="GET">
+                        <button type="submit">View Recipe</button>
+                        <input type="hidden" name="username" value="{{username}}">
+                        <input type="hidden" name="recipe" value="{{recipe['_id']}}">
+                    </form>
+                    <form action="/edit" method="POST">
+                        <button type="submit">Edit</button>
+                        <input type="hidden" name="username" value="{{username}}">
+                    </form>
+                    <form action="/delete" method="POST">
+                        <input type="hidden" name="recipe_id" value="{{ recipe['_id'] }}">
+                        <input type="hidden" name="username" value="{{username}}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
         {% endfor %}
-
-    </p>
+    </div>
     <return-home></return-home>
     {% endblock content %}

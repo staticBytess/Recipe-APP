@@ -56,22 +56,28 @@ def random():
     recipe = parseData(data)
     return render_template('random.html', recipe = recipe)
 
-@app.route("/idInfo", methods = ['GET', 'POST'])
-def idInfo():
+# @app.route("/idInfo", methods = ['GET', 'POST'])
+# def idInfo():
     
         
-        value = request.args.get('value')
+#         value = request.args.get('value')
         
+<<<<<<< HEAD
         url = f"https://api.spoonacular.com/recipes/"+value+"/information"
         params = {
                     "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
+=======
+#         url = f"https://api.spoonacular.com/recipes/"+value+"/information"
+#         params = {
+#                     "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+>>>>>>> bde5ff36fe07cec54facd407264297b942150d6f
                     
-                }
-        response = requests.get(url, params)
-        data = json.loads(response.text)
+#                 }
+#         response = requests.get(url, params)
+#         data = json.loads(response.text)
 
-        recipe = parseData(data)
-        return render_template("idInfo.html", recipe = recipe)
+#         recipe = parseData(data)
+#         return render_template("idInfo.html", recipe = recipe)
 
 @app.route("/searchResults", methods=['GET', 'POST'])
 def search():
@@ -163,42 +169,114 @@ def userdata():
 
     return render_template("userdata.html", recipeList=recipeList, username = username)
 
-@app.route("/delete", methods=[ 'GET', 'POST'])
+@app.route("/delete", methods=['POST'])
 def delete():
-    username = str(request.form['username'])
-    recipe_id= str(request.form['recipe_id'])
+    username = request.form['username']
+    recipe_id = request.form['recipe_id']
+    
     client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db['favorites']
 
-    collection.delete_one({'_id': recipe_id})
+    collection.delete_one({"_id": recipe_id})
+
     recipeList = saved(username)
 
-    return render_template("userdata.html", recipeList=recipeList, username = username)
+    return render_template("userdata.html", recipeList = recipeList, username = username)
 
 @app.route("/addFave", methods=['GET', 'POST'])
 def addFave():
     value = request.args.get('value')
-    
     url = f"https://api.spoonacular.com/recipes/"+value+"/information"
-    if value is None:
-        # Handle the case where 'value' is missing, e.g., redirect to an error page
-        return "Value parameter is missing.", 400
+
     params = {
+<<<<<<< HEAD
                 "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
                 
+=======
+                "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+
+>>>>>>> bde5ff36fe07cec54facd407264297b942150d6f
             }
+    
     response = requests.get(url, params)
     data = json.loads(response.text)
-
     recipe = parseData(data)
-    return render_template("addfave.html", recipe = recipe )
 
+    return render_template("addfave.html", recipe = recipe)
 
+@app.route("/add_recipe", methods=["POST"])
+def add_recipe():
+    username = request.form.get("user_name")
+
+    #This can probably be simplified so we do not have get each individual field
+    title = request.form.get("title")
+    id = request.form.get("id")
+    image = request.form.get("image")
+    summary = request.form.get("summary")
+    image = request.form.get("image")
+    ingredients = request.form.get("ingredients")
+    website = request.form.get("website")
+    vegetarian= request.form.get("vegetarian")
+    vegan= request.form.get("vegan")
+    glutenFree= request.form.get("glutenFree")
+    instructions= request.form.get("instructions")
+    instruc= request.form.get("instruc")
+
+    # Creates a dictionary representing the recipe data
+    recipe_data = {
+        "title": title,
+        "id": id,
+        "image": image,
+        "summary": summary,
+        "ingredients": ingredients,
+        "website": website,
+        "vegetarian": vegetarian,
+        "vegan": vegan,
+        "glutenFree": glutenFree,
+        "instructions": instructions,
+        "instruc": instruc,
+
+    }
+
+    addRecipe(username, recipe_data)
+
+    return "Recipe added successfully!"
+
+@app.route("/view", methods=['POST', 'GET'])
+def view():
+    
+    username = request.args.get("username") 
+    
+    if request.method == 'GET': #if called from userdata.html
+        recipe = request.args.get("recipe")
+        recipe = getRecipe(username, recipe)
+        saved = 1
+    else: #if called from any other html
+        recipe = request.form.get('value')
+        recipe = str(recipe)
+        url = f"https://api.spoonacular.com/recipes/"+recipe+"/information"
+        params = {
+                    "apiKey":"b67eb3c9d9f94a94bc7d8d966daa48fc",
+                    
+                }
+        response = requests.get(url, params)
+        data = json.loads(response.text)
+
+        recipe = parseData(data)
+        saved = 0
+        
+    return render_template("view.html", recipe=recipe, saved=saved)
+
+def getRecipe(username, recipe_title):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
+    collection = db["favorites"]
+    recipe_document = collection.find_one({"_id": recipe_title})
+    if recipe_document:
+        return recipe_document.get("data")
+    else:
+        return None
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-
-
-
-
