@@ -240,6 +240,7 @@ def view():
     if request.method == 'GET': #if called from userdata.html
         recipe = request.args.get("recipe")
         recipe = getRecipe(username, recipe)
+        saved = 1
     else: #if called from any other html
         recipe = request.form.get('value')
         recipe = str(recipe)
@@ -252,8 +253,9 @@ def view():
         data = json.loads(response.text)
 
         recipe = parseData(data)
+        saved = 0
         
-    return render_template("view.html", recipe=recipe)
+    return render_template("view.html", recipe=recipe, saved=saved)
 
 def getRecipe(username, recipe_title):
     client = MongoClient("mongodb://localhost:27017")
