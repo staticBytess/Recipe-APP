@@ -232,16 +232,6 @@ def add_recipe():
 
     return "Recipe added successfully!"
 
-
-# @app.route("/viewRecipe", methods=["GET"])
-# def viewRecipe():
-#     username = request.args.get("username") 
-#     recipe = request.args.get("recipe")
-    
-#     recipe = getRecipe(username, recipe)
-    
-#     return render_template("viewfave.html", recipe=recipe)
-
 @app.route("/view", methods=['POST', 'GET'])
 def view():
     
