@@ -15,8 +15,14 @@ def addRecipe(username, data):
     collection = db["favorites"]
 
     ingredients_string = data["ingredients"]
-    ingredients_list = eval(ingredients_string)
+    # Remove brackets
+    ingredients_string = ingredients_string.replace("[", "").replace("]", "")
+    # Split the string by comma and then remove opening/closing apostrophes
+    ingredients_list = [ingredient.strip("'") for ingredient in ingredients_string.split("', '")]
+
+    # Update data with cleaned ingredients list
     data["ingredients"] = ingredients_list
+
 
     title = data["title"]
     recipe = {
@@ -26,28 +32,26 @@ def addRecipe(username, data):
     collection.insert_one(recipe)
 
 #Work in progress. Does not currently work
-def updateRecipe(username, new, old = 0, _id = 0):
-    db = client[username]
-    collection = db["favorites"]
+# def updateRecipe(username, recipe, _id = 0):
+#     db = client[username]
+#     collection = db["favorites"]
+#     delete(username, recipe)
 
-    if old == 0:
-        delete(username, old)
+#      # Decode the JSON string back into a Python object
+#     ingredients_list = json.loads(recipe["ingredients"])
+#     recipe["ingredients"] = ingredients_list
 
-     # Decode the JSON string back into a Python object
-    ingredients_list = json.loads(new["ingredients"])
-    new["ingredients"] = ingredients_list
+#     if _id == 0:
+#         title = recipe["title"]
+#     else:
+#         title = _id
 
-    if _id == 0:
-        title = new["title"]
-    else:
-        title = _id
+#     recipe = {
+#         "_id": title,
+#         "data": recipe
+#     }
 
-    recipe = {
-        "_id": title,
-        "data": new
-    }
-
-    collection.insert_one(recipe)
+#     collection.insert_one(recipe)
 
 
 def checkUser():
@@ -104,17 +108,14 @@ def saved(userName):
     
     return recipeList
         
-def delete(userName, recipe):
-    db = client[userName]
+def delete_recipe(username, recipe_title):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
     collection = db['favorites']
 
-    recDelete = re.compile(recipe, re.IGNORECASE)
-    docDelete = collection.find_one({"_id": {"$regex": recDelete}})
-    if docDelete:
-        result = collection.delete_one({"_id": docDelete["_id"]})
-        if result.deleted_count == 1:
-            print("Document deleted successfully.")
-        else:
-            print("Document not found or could not be deleted.")
+    result = collection.delete_one({"_id": recipe_title})
+    
+    if result.deleted_count == 1:
+        print("Deleted")
     else:
-        print("Recipe not found try again")
+        print("Document not found")
