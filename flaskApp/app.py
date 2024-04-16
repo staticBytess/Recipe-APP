@@ -13,6 +13,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 api_key = "9864ec4977cf4c629b1b4a5647a9e502"
+client = MongoClient('mongodb://localhost:27017/')
 
 @app.route("/")
 @app.route("/home")
@@ -47,11 +48,11 @@ def random():
         
     #data = response.json()
     
-    random = "782585"
-    recepies = data['recipes'] 
-    for recepieTitle in recepies:
-        random = str(recepieTitle["id"])
-    url = "https://api.spoonacular.com/recipes/" + random + "/information"
+    # random = ""
+    # recepies = data['recipes'] 
+    # for recepieTitle in recepies:
+    #     random = str(recepieTitle["id"])
+    url = "https://api.spoonacular.com/recipes/" + "782585" + "/information"
     params = {
                 "apiKey":api_key,
                 
@@ -61,32 +62,26 @@ def random():
     recipe = parseData(data)
     return render_template('random.html', recipe = recipe)
 
-# Function to check if a document with the current date exists in the database
-def document_exists_for_date(date):
-    client = MongoClient('mongodb://localhost:27017/')
-    db = client['recipeoftheday']
-    collection = db['favorites']
-    return collection.find_one({'_id': date}) is not None
 
 #does not currently work. Needs to be able to update a document
 @app.route("/recipeToday")
 def recipeOfTheDay():
 
-    client = MongoClient('mongodb://localhost:27017/')
-    db = client['recipeoftheday']  
+    username = 'recipeoftheday'
+    db = client[username]  
     collection = db['favorites']
-
     current_date = datetime.now().date()
 
     if document_exists_for_date(str(current_date)):
         # If a document for the current date exists, fetch the recipe from the database
         recipe = collection.find_one({'_id': str(current_date)})
     else:
+        collection.drop()
         api = sp.API(api_key)
         response = api.get_random_recipes()
         data = response.json()
         
-        random = ""
+        #random = ""
         recepies = data['recipes'] 
         for recepieTitle in recepies:
             random = str(recepieTitle["id"])
@@ -95,6 +90,7 @@ def recipeOfTheDay():
                     "apiKey":api_key,
                     
                 }
+        
         response = requests.get(url, params)
         data = json.loads(response.text)
         recipe = parseData(data)
@@ -111,12 +107,12 @@ def recipeOfTheDay():
         "glutenFree": recipe.glutenFree,
         "instructions": recipe.instructions,
         }
+        
         addRecipe("recipeoftheday", recipe_data)
         
-        document = collection.find_one({'_id': recipe.title})  # Assuming you're updating this document
+        document = collection.find_one({'_id': recipe.title})
 
         if document:
-            # Update the _id field
             updateRecipe("recipeoftheday", recipe_data, recipe_data, _id = str(current_date))
             print("Document updated successfully.")
         else:
@@ -332,15 +328,6 @@ def view():
         
     return render_template("view.html", recipe=recipe, saved=saved)
 
-def getRecipe(username, recipe_title):
-    client = MongoClient("mongodb://localhost:27017")
-    db = client[username]
-    collection = db["favorites"]
-    recipe_document = collection.find_one({"_id": recipe_title})
-    if recipe_document:
-        return recipe_document.get("data")
-    else:
-        return None
     
 @app.route('/edit', methods=['GET'])
 def display_data():

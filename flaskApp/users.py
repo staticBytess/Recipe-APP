@@ -119,3 +119,29 @@ def delete_recipe(username, recipe_title):
         print("Deleted")
     else:
         print("Document not found")
+
+def delete_collection(username, collection):
+    db = client[username]
+    collection = db['favorites']
+    
+    # Delete the collection
+    collection.drop()
+    
+    return 'Collection deleted successfully!'
+
+def getRecipe(username, recipe_title):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
+    collection = db["favorites"]
+    recipe_document = collection.find_one({"_id": recipe_title})
+    if recipe_document:
+        return recipe_document.get("data")
+    else:
+        return None
+    
+# Function to check if a document with the passed name exists in the database
+def document_exists_for_date(name):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['recipeoftheday']
+    collection = db['favorites']
+    return collection.find_one({'_id': name}) is not None
