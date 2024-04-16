@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 import getpass
 import re
 
+client = MongoClient("mongodb://localhost:27017")
 
 def addRecipe(username, data):
     client = MongoClient("mongodb://localhost:27017")
@@ -22,6 +23,30 @@ def addRecipe(username, data):
         "_id":title,
         "data":data
     }
+    collection.insert_one(recipe)
+
+#Work in progress. Does not currently work
+def updateRecipe(username, new, old = 0, _id = 0):
+    db = client[username]
+    collection = db["favorites"]
+
+    if old == 0:
+        delete(username, old)
+
+     # Decode the JSON string back into a Python object
+    ingredients_list = json.loads(new["ingredients"])
+    new["ingredients"] = ingredients_list
+
+    if _id == 0:
+        title = new["title"]
+    else:
+        title = _id
+
+    recipe = {
+        "_id": title,
+        "data": new
+    }
+
     collection.insert_one(recipe)
 
 
@@ -68,15 +93,9 @@ def addUser():
 
 def saved(userName):
 
-    client = MongoClient("mongodb://localhost:27017")
-
-# Select the database
     db = client[userName]
-
-# Select the collection
     collection = db['favorites']
 
-# Retrieve all documents in the collection
     documents = collection.find()
     recipeList = []
 # Iterate over the documents and print the _id field of each document
@@ -86,8 +105,6 @@ def saved(userName):
     return recipeList
         
 def delete(userName, recipe):
-    
-    client = MongoClient("mongodb://localhost:27017")
     db = client[userName]
     collection = db['favorites']
 
