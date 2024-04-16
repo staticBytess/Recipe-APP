@@ -26,6 +26,12 @@
     }
 }
 
+#update-form{
+    text-align: left;
+    margin: 0 auto;
+    width: 50%;
+}
+
 .saved-recipe{
     font-size: large;
     h4{
@@ -169,5 +175,10 @@ img{
     padding-bottom: 10px;
 }
 
+textarea{
+    width: 400px;
+    min-height: 40px;
+    max-height: 500px;
+}
 
 
