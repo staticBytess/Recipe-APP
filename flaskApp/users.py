@@ -9,7 +9,7 @@ import re
 
 client = MongoClient("mongodb://localhost:27017")
 
-def addRecipe(username, data):
+def addRecipe(username, data, _id=0):
     client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db["favorites"]
@@ -23,12 +23,17 @@ def addRecipe(username, data):
     # Update data with cleaned ingredients list
     data["ingredients"] = ingredients_list
 
-
-    title = data["title"]
-    recipe = {
-        "_id":title,
-        "data":data
-    }
+    if _id==0:
+        title = data["title"]
+        recipe = {
+            "_id":title,
+            "data":data
+        }
+    else:
+        recipe = {
+            "_id":_id,
+            "data":data
+        }
     collection.insert_one(recipe)
 
 #Work in progress. Does not currently work

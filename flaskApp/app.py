@@ -12,7 +12,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-api_key = "9864ec4977cf4c629b1b4a5647a9e502"
+api_key = "e3a3410195304ed7a410f3c4b6149a50"
 client = MongoClient('mongodb://localhost:27017/')
 
 @app.route("/")
@@ -37,30 +37,31 @@ def id():
         data = json.loads(response.text)
         recipe = parseData(data)
 
-        return render_template("view.html", recipe = recipe)
+        return render_template("view.html", recipe = recipe, saved=0)
     
 @app.route("/random")
 def random():
 
     api = sp.API(api_key)
+    response = api.get_random_recipes()
+    data = response.json()
+    random = ""
+    recepies = data['recipes'] 
 
-    #response = api.get_random_recipes()
-        
-    #data = response.json()
-    
-    # random = ""
-    # recepies = data['recipes'] 
-    # for recepieTitle in recepies:
-    #     random = str(recepieTitle["id"])
-    url = "https://api.spoonacular.com/recipes/" + "782585" + "/information"
+    for recepieTitle in recepies:
+        random = str(recepieTitle["id"])
+
+    url = "https://api.spoonacular.com/recipes/" + random + "/information"
     params = {
                 "apiKey":api_key,
                 
              }
+    
     response = requests.get(url, params)
     data = json.loads(response.text)
     recipe = parseData(data)
-    return render_template('random.html', recipe = recipe)
+
+    return render_template('view.html', recipe = recipe, saved=0, random=1)
 
 
 #does not currently work. Needs to be able to update a document
@@ -74,7 +75,7 @@ def recipeOfTheDay():
 
     if document_exists_for_date(str(current_date)):
         # If a document for the current date exists, fetch the recipe from the database
-        recipe = collection.find_one({'_id': str(current_date)})
+         recipe = getRecipe('recipeoftheday', str(current_date))
     else:
         collection.drop()
         api = sp.API(api_key)
@@ -94,13 +95,15 @@ def recipeOfTheDay():
         response = requests.get(url, params)
         data = json.loads(response.text)
         recipe = parseData(data)
+        ingredients_string = ' + '.join(recipe.ingredients)
+
 
         recipe_data = {
         "title": recipe.title,
         "id": recipe.id,
         "image": recipe.image,
         "summary": recipe.summary,
-        "ingredients": json.dumps(recipe.ingredients),
+        "ingredients": ingredients_string,
         "website": recipe.website,
         "vegetarian": recipe.vegetarian,
         "vegan": recipe.vegan,
@@ -108,19 +111,11 @@ def recipeOfTheDay():
         "instructions": recipe.instructions,
         }
         
-        addRecipe("recipeoftheday", recipe_data)
-        
-        document = collection.find_one({'_id': recipe.title})
+        addRecipe("recipeoftheday", recipe_data, _id=str(current_date))
 
-        if document:
-            updateRecipe("recipeoftheday", recipe_data, recipe_data, _id = str(current_date))
-            print("Document updated successfully.")
-        else:
-            print("Document not found.")
-
-        recipe = getRecipe('recipeoftheday', recipe.title)
+        recipe = getRecipe('recipeoftheday', str(current_date))
         
-    return render_template('random.html', recipe=recipe)
+    return render_template('view.html', recipe=recipe, saved=0, homebtn=0)
 
 # @app.route("/idInfo", methods = ['GET', 'POST'])
 # def idInfo():
@@ -220,10 +215,10 @@ def login():
     
     return render_template("login.html" )
 
-@app.route("/userdata", methods=['GET', 'POST'])
+@app.route("/userdata", methods=['GET'])
 def userdata():
-    username = str(request.form['user_name'])
-    password = str(request.form['password'])
+    username = str(request.args.get('user_name'))
+    #password = str(request.form['password'])
 
     recipeList = saved(username) 
 
@@ -282,13 +277,13 @@ def add_recipe():
         "title": title,
         "id": id,
         "image": image,
+        "website": website,
+        "vegetarian": vegetarian,  
+        "vegan": vegan, 
+        "glutenFree": glutenFree, 
         "summary": summary,
         "ingredients": ingredients,
-        "website": website,
-        "vegetarian": vegetarian,
-        "vegan": vegan,
-        "glutenFree": glutenFree,
-        "instructions": instructions,
+        "instructions": instructions
 
     }
     client = MongoClient("mongodb://localhost:27017")
@@ -326,7 +321,7 @@ def view():
         recipe = parseData(data)
         saved = 0
         
-    return render_template("view.html", recipe=recipe, saved=saved)
+    return render_template("view.html", recipe=recipe, saved=saved, username=username)
 
     
 @app.route('/edit', methods=['GET'])
@@ -361,8 +356,8 @@ def updateRecipe():
     instructions = request.form.get("instructions")
 
     updated_recipe = {
-        "id": recipe_id,
         "title": title,
+        "id": recipe_id,
         "image": image,
         "website": website,
         "vegetarian": vegetarian,  
