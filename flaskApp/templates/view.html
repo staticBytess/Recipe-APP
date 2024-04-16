@@ -26,9 +26,9 @@
 
 <h4>
     {% for ingredient in recipe.ingredients %}
-        <p>
-            {{ ingredient }}
-        </p>
+    {% for part in ingredient.split('+') %}
+    <p>{{ part.strip() }}</p>
+    {% endfor %}
     {% endfor %}
 </h4>
     <return-home></return-home>
