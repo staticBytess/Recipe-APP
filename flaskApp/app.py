@@ -6,8 +6,13 @@ from bs4 import BeautifulSoup
 from recipe import Recipe
 from users import *
 from methods import *
+import time
+from datetime import datetime
+
 
 app = Flask(__name__)
+
+api_key = "9864ec4977cf4c629b1b4a5647a9e502"
 
 @app.route("/")
 @app.route("/home")
@@ -24,7 +29,7 @@ def id():
         
         url = f"https://api.spoonacular.com/recipes/"+data_input+"/information"
         params = {
-                    "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
+                    "apiKey":api_key,
                     
                 }
         response = requests.get(url, params)
@@ -36,25 +41,90 @@ def id():
 @app.route("/random")
 def random():
 
-    api = sp.API("9864ec4977cf4c629b1b4a5647a9e502")
+    api = sp.API(api_key)
 
-    response = api.get_random_recipes()
+    #response = api.get_random_recipes()
         
-    data = response.json()
+    #data = response.json()
     
-    random = ""
+    random = "782585"
     recepies = data['recipes'] 
     for recepieTitle in recepies:
         random = str(recepieTitle["id"])
     url = "https://api.spoonacular.com/recipes/" + random + "/information"
     params = {
-                "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
+                "apiKey":api_key,
                 
              }
     response = requests.get(url, params)
     data = json.loads(response.text)
     recipe = parseData(data)
     return render_template('random.html', recipe = recipe)
+
+# Function to check if a document with the current date exists in the database
+def document_exists_for_date(date):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['recipeoftheday']
+    collection = db['favorites']
+    return collection.find_one({'_id': date}) is not None
+
+#does not currently work. Needs to be able to update a document
+@app.route("/recipeToday")
+def recipeOfTheDay():
+
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['recipeoftheday']  
+    collection = db['favorites']
+
+    current_date = datetime.now().date()
+
+    if document_exists_for_date(str(current_date)):
+        # If a document for the current date exists, fetch the recipe from the database
+        recipe = collection.find_one({'_id': str(current_date)})
+    else:
+        api = sp.API(api_key)
+        response = api.get_random_recipes()
+        data = response.json()
+        
+        random = ""
+        recepies = data['recipes'] 
+        for recepieTitle in recepies:
+            random = str(recepieTitle["id"])
+        url = "https://api.spoonacular.com/recipes/" + random + "/information"
+        params = {
+                    "apiKey":api_key,
+                    
+                }
+        response = requests.get(url, params)
+        data = json.loads(response.text)
+        recipe = parseData(data)
+
+        recipe_data = {
+        "title": recipe.title,
+        "id": recipe.id,
+        "image": recipe.image,
+        "summary": recipe.summary,
+        "ingredients": json.dumps(recipe.ingredients),
+        "website": recipe.website,
+        "vegetarian": recipe.vegetarian,
+        "vegan": recipe.vegan,
+        "glutenFree": recipe.glutenFree,
+        "instructions": recipe.instructions,
+        }
+        addRecipe("recipeoftheday", recipe_data)
+        
+        document = collection.find_one({'_id': recipe.title})  # Assuming you're updating this document
+
+        if document:
+            # Update the _id field
+            updateRecipe("recipeoftheday", recipe_data, recipe_data, _id = str(current_date))
+            print("Document updated successfully.")
+        else:
+            print("Document not found.")
+
+        recipe = getRecipe('recipeoftheday', recipe.title)
+        
+    return render_template('random.html', recipe=recipe)
 
 # @app.route("/idInfo", methods = ['GET', 'POST'])
 # def idInfo():
@@ -84,7 +154,7 @@ def search():
         if selection == "ingredient":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-                        "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
+                        "apiKey":api_key,
                         "query":search
                     }
 
@@ -107,7 +177,7 @@ def search():
         elif selection == "cuisine":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-                    "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
+                    "apiKey":api_key,
                     "cuisine":search,
                     "number":10
                       }
@@ -129,7 +199,7 @@ def search():
         elif selection == "diet":
             url = "https://api.spoonacular.com/recipes/complexSearch"
             params = {
-            "apiKey":"9864ec4977cf4c629b1b4a5647a9e502",
+            "apiKey":api_key,
             "diet":search,
             "number":10
             }
@@ -210,7 +280,6 @@ def add_recipe():
     vegan= request.form.get("vegan")
     glutenFree= request.form.get("glutenFree")
     instructions= request.form.get("instructions")
-    instruc= request.form.get("instruc")
 
     # Creates a dictionary representing the recipe data
     recipe_data = {
@@ -224,7 +293,6 @@ def add_recipe():
         "vegan": vegan,
         "glutenFree": glutenFree,
         "instructions": instructions,
-        "instruc": instruc,
 
     }
 
@@ -266,6 +334,19 @@ def getRecipe(username, recipe_title):
         return recipe_document.get("data")
     else:
         return None
+    
+@app.route('/edit', methods=['GET'])
+def display_data():
+    username = request.args.get('username')
+    recipe_id = request.args.get("recipe")  # Retrieve recipe ID from query parameters
+
+    # Fetch the recipe data by its _id
+    recipe = getRecipe(username, recipe_id)
+    
+    if recipe:
+        return render_template('edit.html', recipe=recipe)
+    else:
+        return "Recipe not found."
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
