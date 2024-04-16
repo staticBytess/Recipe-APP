@@ -36,7 +36,7 @@ def id():
         data = json.loads(response.text)
         recipe = parseData(data)
 
-        return render_template("id.html", recipe = recipe)
+        return render_template("view.html", recipe = recipe)
     
 @app.route("/random")
 def random():
