@@ -1,6 +1,7 @@
 {% extends "default.html" %}
 {% block title %}
 <title>Recipe Info</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock title %}
 
 {% block content %}
@@ -9,13 +10,15 @@
     <div id="update-form">
         <form action="/updateRecipe" method="POST">
             <label for="id">Recipe ID: </label>
+            <input type="hidden" name="username" value="{{username}}">
+            <input type="hidden" id="original_title" name="original_title">
             <input type="text" name="id" value="{{ recipe.id }}"><br>
 
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" value="{{ recipe.title }}"><br>
         
             <label for="image">Image URL:</label>
-            <textarea type="text" id="image" name="image">{{recipe.image }}"></textarea><br>
+            <textarea type="text" id="image" name="image"></textarea><br>
 
             <label for="website">Website URL:</label>
             <input type="text" id="website" name="website" value="{{ recipe['website'] }}" size="50px"><br>
@@ -30,19 +33,39 @@
             <input type="text" id="glutenFree" name="glutenFree" value="{{ recipe.glutenFree }}"><br>
         
             <label for="summary">Summary:</label>
-            <textarea type="text" id="summary" name="summary">{{ recipe.summary }}"></textarea><br>
+            <textarea type="text" id="summary" name="summary"></textarea><br>
         
-<label for="ingredients">Ingredients:</label>
-<textarea id="ingredients" rows="4"
-    name="ingredients">{% for ingredient in recipe.ingredients %}{{ ingredient }}{% if not loop.last %}, {% endif %}{% endfor %}</textarea><br>
+            <label for="ingredients">Ingredients:</label>
+            <textarea id="ingredients" rows="4"
+                name="ingredients">{% for ingredient in recipe.ingredients %}{{ ingredient }}{% if not loop.last %} + {% endif %}{% endfor %}</textarea><br>
 
-        
-        
-            
             <label for="instructions">Instructions:</label>
             <textarea id="instructions" name="instructions">{{ recipe.instructions }}</textarea><br>
         
             <button type="submit">Save Changes</button>
         </form>
     </div>
+
+<script>
+    $(document).ready(function () {
+
+        var originalTitleValue = "{{ recipe.title }}";
+        $("#original_title").val(originalTitleValue);
+        $("#original_title").prop("readonly", true); // makes original_title constant
+
+        // Extract the image URL from the MongoDB data
+        var imageUrl = "{{ recipe.image }}";
+        // Decode HTML entities
+        imageUrl = $("<textarea/>").html(imageUrl).text();
+        // Remove the extra characters at the end of the URL
+        imageUrl = imageUrl.replace(/">/g, '');
+        // Set the value of the textarea field
+        $("#image").val(imageUrl);
+        
+        var summaryText = "{{ recipe.summary }}";
+        summaryText = $("<textarea/>").html(summaryText).text();
+        summaryText = summaryText.replace(/">/g, '');
+        $("#summary").val(summaryText);
+    });
+</script>
 {% endblock content %}
