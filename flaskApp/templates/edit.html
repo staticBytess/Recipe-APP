@@ -7,7 +7,7 @@
     
     <h1>Edit Recipe</h1>
     <div id="update-form">
-        <form action="/update_recipe" method="POST">
+        <form action="/updateRecipe" method="POST">
             <label for="id">Recipe ID: </label>
             <input type="text" name="id" value="{{ recipe.id }}"><br>
 
@@ -32,21 +32,17 @@
             <label for="summary">Summary:</label>
             <textarea type="text" id="summary" name="summary">{{ recipe.summary }}"></textarea><br>
         
-            <label for="ingredients">Ingredients:</label>
-            <textarea id="ingredients" rows="4" name="ingredients" >
-                {% for ingredient in recipe.ingredients %}
-                
-                    {{ ingredient }},
-                
-                {% endfor %}
-            </textarea><br>
+<label for="ingredients">Ingredients:</label>
+<textarea id="ingredients" rows="4"
+    name="ingredients">{% for ingredient in recipe.ingredients %}{{ ingredient }}{% if not loop.last %}, {% endif %}{% endfor %}</textarea><br>
+
         
         
             
             <label for="instructions">Instructions:</label>
             <textarea id="instructions" name="instructions">{{ recipe.instructions }}</textarea><br>
         
-            <input type="submit" value="Save Changes">
+            <button type="submit">Save Changes</button>
         </form>
     </div>
 {% endblock content %}
