@@ -8,9 +8,14 @@
 <div id="recipe-header">
     <h1>{{recipe.title}}</h1>
     <h3>ID: {{recipe.id}}</h3>
+
     {% if saved == 0 %}
     <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
     {% endif %}
+    {% if random == 1 %}
+    <a href="/random"><button type="submit">New Random Recipe</button></a>
+    {% endif %}
+
     <img src="{{ recipe.image }}" alt="No Image Available" width="400">
     <a href={{recipe.website}}>website</a>
 </div>
@@ -31,5 +36,15 @@
     {% endfor %}
     {% endfor %}
 </h4>
-    <return-home></return-home>
-    {% endblock content %}
+
+{% if saved == 1 %}
+<form action="/userdata" method="GET">
+    <input type="hidden" id="user_name" name="user_name" value="{{ username }}">
+    <button type="submit">Return To Saved Recipes</button>
+</form>
+{% endif %}
+
+{% if saved == 0 %}
+<return-home></return-home>
+{% endif %}
+{% endblock content %}
