@@ -15,9 +15,10 @@
                         <input type="hidden" name="username" value="{{username}}">
                         <input type="hidden" name="recipe" value="{{recipe['_id']}}">
                     </form>
-                    <form action="/edit" method="POST">
+                    <form action="/edit" method="GET">
                         <button type="submit">Edit</button>
-                        <input type="hidden" name="username" value="{{username}}">
+                        <input type="hidden" name="username" value="{{ username }}">
+                        <input type="hidden" name="recipe" value="{{ recipe['_id'] }}">
                     </form>
                     <form action="/delete" method="POST">
                         <input type="hidden" name="recipe_id" value="{{ recipe['_id'] }}">
