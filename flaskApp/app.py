@@ -295,10 +295,17 @@ def add_recipe():
         "instructions": instructions,
 
     }
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
+    collection = db["favorites"]
 
-    addRecipe(username, recipe_data)
+    existing_recipe = collection.find_one({"_id": title})
+    if not existing_recipe:
+        addRecipe(username, recipe_data)
 
-    return "Recipe added successfully!"
+    recipeList = saved(username) 
+
+    return render_template("userdata.html", recipeList=recipeList, username = username)
 
 @app.route("/view", methods=['POST', 'GET'])
 def view():
@@ -344,9 +351,52 @@ def display_data():
     recipe = getRecipe(username, recipe_id)
     
     if recipe:
-        return render_template('edit.html', recipe=recipe)
+        return render_template('edit.html', recipe=recipe, username=username)
     else:
         return "Recipe not found."
+    
+
+@app.route('/updateRecipe', methods=['POST'])
+def updateRecipe():
+
+    username = str(request.form.get("username")) 
+    recipe = str(request.form.get("original_title"))
+
+    recipe_id = request.form.get("id")
+    title = request.form.get("title")
+    image = request.form.get("image")
+    website = request.form.get("website")
+    vegetarian = request.form.get("vegetarian")
+    vegan = request.form.get("vegan")
+    glutenFree = request.form.get("glutenFree")
+    summary = request.form.get("summary")
+    ingredients = request.form.get("ingredients")
+    instructions = request.form.get("instructions")
+
+    updated_recipe = {
+        "id": recipe_id,
+        "title": title,
+        "image": image,
+        "website": website,
+        "vegetarian": vegetarian,  
+        "vegan": vegan, 
+        "glutenFree": glutenFree, 
+        "summary": summary,
+        "ingredients": ingredients,
+        "instructions": instructions
+    }
+
+    client = MongoClient("mongodb://localhost:27017")
+    db = client[username]
+    collection = db['favorites']
+    collection.delete_one({"_id": recipe})
+
+    addRecipe(username, updated_recipe)
+
+    recipeList = saved(username)
+
+    return render_template("userdata.html", recipeList=recipeList, username = username)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
