@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In Page</title>
+    <link rel="stylesheet" href="style1.css">
 
 
     <p>
-        <form action="/userdata" method="GET">
-            <label for="User">Username:</label>
-            <input type="text" required id="user_name" name="user_name">
-            <label for="Password">Password:</label>
-            <input type="password" id="password" name="password">
-            <button type="submit">Submit</button>
-        </form>
+    <form action="/userdata" method="GET">
+        <label for="User">Username:</label>
+        <input type="text" required id="user_name" name="user_name">
+        <label for="Password">Password:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Submit</button>
+    </form>
 
     </p>
-   
+
 
 </head>
+
 <body>
-    
+    <div class="hero">
+
+            <div class="form-box">
+            <div class= "button-box">
+                <div id = "btn"></div>
+                <button type = "button" class = "toggle-btn">Register</button>
+                <button type = "button" class = "toggle-btn">Log In</button>
+            </div>
+            <div class = "social-icons">
+                <img src = "./social media icons/ig.JPG">
+                <img src = "./social media icons/fb.JPG">
+                <img src = "./social media icons/twitter.JPG" >
+            </div>
+        </div>
+        
+    </div>
 </body>
 
 <return-home></return-home>
+
 </html>
