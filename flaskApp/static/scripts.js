@@ -9,7 +9,7 @@ class returnHome extends HTMLElement {
 class saveRecipe extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-        <button type="submit">Add to Favorites</button>
+        <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
         `
     }
 }
