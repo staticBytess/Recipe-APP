@@ -13,7 +13,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 api_key = "e3a3410195304ed7a410f3c4b6149a50"
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb+srv://davidV:p6Vk8G8s!5g.23X@atlascluster.1m2wekf.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster')
 
 @app.route("/")
 @app.route("/home")
@@ -228,8 +228,6 @@ def userdata():
 def delete():
     username = request.form['username']
     recipe_id = request.form['recipe_id']
-    
-    client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db['favorites']
 
@@ -286,7 +284,6 @@ def add_recipe():
         "instructions": instructions
 
     }
-    client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db["favorites"]
 
@@ -368,7 +365,6 @@ def updateRecipe():
         "instructions": instructions
     }
 
-    client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db['favorites']
     collection.delete_one({"_id": recipe})

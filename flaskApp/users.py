@@ -7,10 +7,9 @@ from bson.objectid import ObjectId
 import getpass
 import re
 
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient('mongodb+srv://davidV:p6Vk8G8s!5g.23X@atlascluster.1m2wekf.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster')
 
 def addRecipe(username, data, _id=0):
-    client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db["favorites"]
 
@@ -90,7 +89,6 @@ def addUser():
             with open('accounts.txt', 'a') as file:
 
                 file.write(userName + " " + password+ "\n")
-            client = MongoClient("mongodb://localhost:27017")
             db = client[userName]
             collection = db["favorites"]
 
@@ -114,7 +112,6 @@ def saved(userName):
     return recipeList
         
 def delete_recipe(username, recipe_title):
-    client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db['favorites']
 
@@ -135,7 +132,6 @@ def delete_collection(username, collection):
     return 'Collection deleted successfully!'
 
 def getRecipe(username, recipe_title):
-    client = MongoClient("mongodb://localhost:27017")
     db = client[username]
     collection = db["favorites"]
     recipe_document = collection.find_one({"_id": recipe_title})
@@ -146,7 +142,6 @@ def getRecipe(username, recipe_title):
     
 # Function to check if a document with the passed name exists in the database
 def document_exists_for_date(name):
-    client = MongoClient('mongodb://localhost:27017/')
     db = client['recipeoftheday']
     collection = db['favorites']
     return collection.find_one({'_id': name}) is not None
