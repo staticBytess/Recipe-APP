@@ -29,5 +29,8 @@
             </div>
         {% endfor %}
     </div>
+    <form action="/createNewRecipe" method="POST">
+        <input type="hidden" name="username" value="{{username}}">
+        <button type="submit">Create Recipe</button>
     <return-home></return-home>
     {% endblock content %}
