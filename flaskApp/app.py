@@ -63,8 +63,7 @@ def random():
 
     return render_template('view.html', recipe = recipe, saved=0, random=1)
 
-
-#does not currently work. Needs to be able to update a document
+    
 @app.route("/recipeToday")
 def recipeOfTheDay():
 
@@ -374,6 +373,23 @@ def updateRecipe():
     recipeList = saved(username)
 
     return render_template("userdata.html", recipeList=recipeList, username = username)
+
+@app.route('/createNewRecipe', methods=['POST'])
+def createNewRecipe():
+    username = str(request.form.get("username")) 
+    recipe = {
+        "title": "none",
+        "id": "none",
+        "image": "none",
+        "website": "none",
+        "vegetarian": "none",  
+        "vegan": "none", 
+        "glutenFree": "none", 
+        "summary": "none",
+        "ingredients": "none",
+        "instructions": "none"
+    }
+    return render_template("edit.html", username=username, recipe=recipe)
 
 
 if __name__ == '__main__':
