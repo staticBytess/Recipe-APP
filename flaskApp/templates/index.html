@@ -1,56 +1,56 @@
-{% extends "default.html" %}
-    {% block title %}
-    <title>Main Page</title>
-    {% endblock title %}
-    {% block content %}
-
-<div class = "recipeSearch">
-    <p>
-    <form action="/id" method="POST">
-        <label for="data_input">Enter Recipe ID:</label>
-        <input type="text" id="data_input" name="data_input" placeholder = "Recipe ID">
-        <button type="submit">Submit</button>
-    </form>
-    </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static\scripts.js"></script>
+    <title>Home</title>
+</head>
+<body>
+<div id="nav-header">
+    <div class="recipeSearch">
+        <p>
+        <form action="/id" method="POST">
+            <label for="data_input">Search by ID:</label>
+            <input type="text" id="data_input" name="data_input" placeholder="Recipe ID">
+            <button type="submit">Submit</button>
+        </form>
+        </p>
+    </div>
+    <div class="loginBtn">
+        <img src="https://cdn-icons-png.freepik.com/256/64/64572.png" alt="Login" class="loginImg" width="35px"
+            height="35px">
+        <a href="/login"><button>Log In</button></a>
+    </div>
 </div>
 
-<div class = "categorySearch">
-    <p>
+<div id="team-logo">
+    <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/1397/1397128.png" alt="Logo" width="100px" height="100px">
+    </div>
+    <h1>BugBashers</h1>
+</div>
+
+<div class="categorySearch">
     <form action="/searchResults" method="POST" id="search-options">
-        <label for="search_criteria">Search By: </label>
+        <label for="search_query">Search by Category:</label>
+        <input type="text" id="search_query" name="search_query" placeholder="Ingredient, Diet, Cuisine">
+        <label for="search_criteria"></label>
         <select id="search_criteria" name="search_criteria">
             <option value="ingredient">ingredient</option>
             <option value="diet">diet</option>
             <option values="cuisine">cuisine</option>
         </select>
-        <label for="search_query">Search For</label>
-        <input type="text" id="search_query" name="search_query" placeholder = "Ingredient, Diet, Cuisine">
+        
         <button type="submit">Search</button>
     </form>
-  
-    </p>
 </div>
 
-<div class = "loginBtn">
+<div class="showRandom">
+    <h1>Recipe of the Day</h1>
     <p>
-        <a href="/login"><button>Log In</button></a>
+        <iframe src="/recipeToday" width="70%" height="1400px" frameBorder="0">Browser not compatible.</iframe>
     </p>
 </div>
-<img src="https://cdn-icons-png.freepik.com/256/64/64572.png" alt="Login" class = "loginImg" width = "35px" height = "35px">
-
-<div class = "showRandom">
-    
-    <h1>Random Recipe of the Day</h1>
-    <p>
-    <iframe src="/recipeToday" width="70%" height="1400px" frameBorder="0">Browser not compatible.</iframe>
-    </p>
-</div>
-
-
-
-<div class = "logo">
-    <h1>BugBashers</h1>
-    <img src="https://cdn-icons-png.flaticon.com/512/1397/1397128.png" alt="Logo" width = "100px" height = "100px">
-</div>
-
-{% endblock content %}
+</body>
