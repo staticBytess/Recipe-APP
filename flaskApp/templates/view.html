@@ -17,25 +17,39 @@
     {% endif %}
 
     <img src="{{ recipe.image }}" alt="No Image Available" width="400">
-    <a href={{recipe.website}}>website</a>
+    <!-- <a href={{recipe.website}}>website</a> -->
 </div>
 
-<p>
-    <b>Summary:</b>
-    {{recipe.summary}}
-</p>
+<div id="recipe-items">
+    <div class="recipe-info">
+    <p>
+        <h3><b><u>Summary</u></b></h3>
+        {{recipe.summary}}
+    </p>
+    </div>
 
-<p><b>Instructions:</b> {{recipe.instructions}}</p>
+    <div class="recipe-info">
+    <p>
+    <h3><b><u>Instructions</u></b></h3>
+        {{recipe.instructions}}</p>
+    </p>
+    </div>
 
-<h3>Ingredients:</h3>
-
-<h4>
-    {% for ingredient in recipe.ingredients %}
-    {% for part in ingredient.split('+') %}
-    <p>{{ part.strip() }}</p>
-    {% endfor %}
-    {% endfor %}
-</h4>
+    <div class="recipe-info">
+    <p>
+        <h3><b><u>Ingredients</u></b></h3>
+        <div class="ingredient-list">
+        <h4>
+            {% for ingredient in recipe.ingredients %}
+            {% for part in ingredient.split('+') %}
+            <li>{{ part.strip() }}</li>
+            {% endfor %}
+            {% endfor %}
+        </h4>
+        </div>
+    </p>
+    </div>
+</div>
 
 {% if saved == 1 %}
 <form action="/userdata" method="GET">

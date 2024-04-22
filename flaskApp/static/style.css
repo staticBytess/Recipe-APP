@@ -52,8 +52,26 @@
         font-size: 60px;
         font-family: Tahoma;
     }
+}
 
-    img {}
+.recipe-info{
+    max-width: 950px;
+    text-align: center;
+    margin: 0 auto;
+}
+#recipe-items{
+    padding-top: 15px;
+    font-size: 16px;
+    h3{
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+}
+.ingredient-list{
+    list-style-type: none;
+    li{
+        line-height: 25px;
+    }
 }
 
 .saved-recipe{
