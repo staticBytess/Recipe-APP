@@ -208,7 +208,7 @@ button:hover {
     padding: 14px 16px;
     background: rgb(20, 20, 20);
     display: inline-block;
-    width: 100%;
+    width: 98%;
     height: 85px; 
 }
 .categorySearch input[type=text] {
