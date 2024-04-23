@@ -9,15 +9,15 @@
     <h1>{{recipe.title}}</h1>
     <h3>ID: {{recipe.id}}</h3>
 
-    {% if saved == 0 %}
-    <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
-    {% endif %}
     {% if random == 1 %}
     <a href="/random"><button type="submit">New Random Recipe</button></a>
     {% endif %}
 
     <img src="{{ recipe.image }}" alt="No Image Available" width="400">
     <!-- <a href={{recipe.website}}>website</a> -->
+    {% if saved == 0 %}
+    <p><a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a></p>
+    {% endif %}
 </div>
 
 <div id="recipe-items">
