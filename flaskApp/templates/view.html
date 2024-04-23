@@ -29,27 +29,32 @@
     </div>
 
     <div class="recipe-info">
-    <p>
-    <h3><b><u>Instructions</u></b></h3>
-        {{recipe.instructions}}</p>
-    </p>
-    </div>
-
-    <div class="recipe-info">
-    <p>
-        <h3><b><u>Ingredients</u></b></h3>
-        <div class="ingredient-list">
-        <h4>
-            {% for ingredient in recipe.ingredients %}
-            {% for part in ingredient.split('+') %}
-            <li>{{ part.strip() }}</li>
-            {% endfor %}
-            {% endfor %}
-        </h4>
+        <div class="side-by-side">
+    
+            <div class="instruct-left">
+                <h3><b><u>Instructions</u></b></h3>
+                {% set instructions = recipe.instructions.split('. ') %}
+                {% for instruction in instructions %}
+                    {% set index = loop.index %}
+                    <b>{{ index }}.</b> {{ instruction }}<br><br>
+                {% endfor %}
+            </div>
+            
+            <div class="ingredient-list">
+                <h3><b><u>Ingredients</u></b></h3>
+            <h4>
+                {% for ingredient in recipe.ingredients %}
+                {% for part in ingredient.split('+') %}
+                <li><input type="checkbox">{{ part.strip() }}</li>
+                {% endfor %}
+                {% endfor %}
+            </h4>
+            </div>
         </div>
-    </p>
     </div>
 </div>
+
+
 
 {% if saved == 1 %}
 <form action="/userdata" method="GET">
