@@ -2,8 +2,9 @@
     --button-text-color: black;
     --background-color-darker: rgb(240, 240, 240);
     --page-bckgrnd-color: white;
+    --box-border-radius: 10px;
+    --img-border-radius: 25px;
 }
-
 
 #nav-header{
     display: flex;
@@ -18,6 +19,10 @@
     padding-bottom: 100px;
 }
 
+#search_criteria {
+    border-radius: var(--box-border-radius);
+}
+
 #recipe-header {
     display: flex;
     flex-direction: column;
@@ -27,10 +32,17 @@
     button{
         margin-bottom: 20px; /*seperates the button further from the image */
     }
+    h1{
+        margin-bottom: 5px;
+    }
 
     h3{
         margin-top: 0px;
         margin-bottom: 25px;
+    }
+
+    img{
+        border-radius: var(--img-border-radius);
     }
 }
 
@@ -52,7 +64,7 @@
         font-size: 60px;
         font-family: Tahoma;
     }
-}
+    }
 
 .recipe-info{
     max-width: 950px;
@@ -67,11 +79,33 @@
         margin-bottom: 8px;
     }
 }
+
+.instruct-left{
+    text-align: left;
+    max-width: 600px;
+    margin-right: 30px;
+    border-right: 3px solid var(--button-text-color);
+    line-height: 20px
+    
+}
 .ingredient-list{
+    text-align: left;
     list-style-type: none;
+    padding-left: 15px;
+    
     li{
         line-height: 25px;
     }
+}
+
+.ingredient-list input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-right: 10px;
+    accent-color: #90d3a4;
+}
+
+.side-by-side{
+    display: flex;
 }
 
 .saved-recipe{
@@ -111,7 +145,7 @@
 
 .image{
     width: 100%;
-    border-radius: inherit;
+    border-radius: var(--box-border-radius);
 }
 label{
     padding: 0px 5px;
@@ -139,7 +173,7 @@ body {
 
 button {
     font-size: 18px;
-    border-radius: 10px;
+    border-radius: var(--box-border-radius);
     background-color: var(--background-color-darker);
     color: var(--button-text-color);
     padding: 5px;
@@ -158,9 +192,13 @@ button:hover {
 .loginBtn {
     display: flex;
     padding-top: 18px;
+    img {
+            border-radius: none;
+        }
 
 }
 .loginImg {
+    border-radius: none;
     padding-right: 10px;
 }
 
@@ -189,14 +227,13 @@ button:hover {
     }
 }
 
-
-
 form {
     padding: 0px 5px;
 }
 
 img{
     padding-bottom: 10px;
+    border-radius: var(--img-border-radius);
 }
 
 textarea{
@@ -206,3 +243,6 @@ textarea{
 }
 
 
+input[type=text] {
+    border-radius: var(--box-border-radius);
+}
