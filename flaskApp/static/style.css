@@ -249,3 +249,10 @@ textarea{
 input[type=text] {
     border-radius: var(--box-border-radius);
 }
+
+a{
+    color:rgb(21, 91, 172)
+}
+a:visited{
+    color: rgb(12, 61, 116);
+}
