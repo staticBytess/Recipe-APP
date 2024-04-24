@@ -35,7 +35,8 @@ def id():
                 }
         response = requests.get(url, params)
         if response.status_code == 404:
-            return render_template("index.html")
+            error = "Recipe not found."
+            return render_template("index.html", error=error)
         else:
             data = json.loads(response.text)
             recipe = parseData(data)
