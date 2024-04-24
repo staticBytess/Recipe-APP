@@ -4,6 +4,15 @@
     {% endblock title %}
     {% block content %}
     
+    <div style="display: flex; justify-content: space-between;">
+    <form action="/createNewRecipe" method="POST">
+        <input type="hidden" name="username" value="{{username}}">
+        <button type="submit">Create Recipe</button>
+    </form>
+    <br>
+    <return-home></return-home>
+    </div>
+
     <div class="recipe-grid">
         {% for recipe in recipeList %}
             <div class="saved-recipe">
@@ -29,10 +38,4 @@
             </div>
         {% endfor %}
     </div>
-    <form action="/createNewRecipe" method="POST">
-        <input type="hidden" name="username" value="{{username}}">
-        <button type="submit">Create Recipe</button>
-    </form>
-    <br>
-    <return-home></return-home>
     {% endblock content %}
