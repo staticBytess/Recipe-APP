@@ -366,7 +366,11 @@ def updateRecipe():
 
     db = client[username]
     collection = db['favorites']
-    collection.delete_one({"_id": recipe})
+    
+    if(recipe == ""):
+        collection.delete_one({"_id": updated_recipe["title"]})
+    else:
+        collection.delete_one({"_id": recipe})
 
     addRecipe(username, updated_recipe)
 
@@ -378,16 +382,16 @@ def updateRecipe():
 def createNewRecipe():
     username = str(request.form.get("username")) 
     recipe = {
-        "title": "none",
-        "id": "none",
-        "image": "none",
-        "website": "none",
-        "vegetarian": "none",  
-        "vegan": "none", 
-        "glutenFree": "none", 
-        "summary": "none",
-        "ingredients": "none",
-        "instructions": "none"
+        "title": "",
+        "id": "",
+        "image": "",
+        "website": "",
+        "vegetarian": "",  
+        "vegan": "", 
+        "glutenFree": "", 
+        "summary": "",
+        "ingredients": "",
+        "instructions": ""
     }
     return render_template("edit.html", username=username, recipe=recipe)
 
