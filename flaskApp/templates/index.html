@@ -17,6 +17,9 @@
             <button type="submit">Submit</button>
         </form>
         </p>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
     </div>
     <div class="loginBtn">
         <img src="https://cdn-icons-png.freepik.com/256/64/64572.png" alt="Login" class="loginImg" width="35px"
