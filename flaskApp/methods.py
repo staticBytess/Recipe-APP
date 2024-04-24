@@ -29,7 +29,10 @@ def parseData(data):
         vegan = data['vegan']
         glutenFree = data['glutenFree']
         image = data['image']
-        instructions = remove_tags(data['instructions'])
+
+        instructions = ""
+        if "instructions" in data and data["instructions"] is not None:
+            instructions = remove_tags(data['instructions'])
 
 
         instruc = data['extendedIngredients']
