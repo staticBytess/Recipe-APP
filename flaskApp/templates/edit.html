@@ -40,8 +40,8 @@
                 name="ingredients">{% for ingredient in recipe.ingredients %}{{ ingredient }}{% if not loop.last %} + {% endif %}{% endfor %}</textarea><br>
 
             <label for="instructions">Instructions:</label>
-            <textarea id="instructions" name="instructions">{{ recipe.instructions }}</textarea><br>
-        
+            <textarea id="instructions" name="instructions">{{ recipe.instructions }}</textarea><br><br>
+            
             <button type="submit">Save Changes</button>
         </form>
     </div>
