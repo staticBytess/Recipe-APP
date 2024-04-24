@@ -15,9 +15,21 @@
 
     <img src="{{ recipe.image }}" alt="No Image Available" width="400">
     <!-- <a href={{recipe.website}}>website</a> -->
-    {% if saved == 0 %}
-    <p><a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a></p>
-    {% endif %}
+        {% if saved == 1 %}
+        <div style="display: flex;">
+            <form action="/edit" method="GET">
+                <button type="submit">Edit Recipe</button>
+                <input type="hidden" name="username" value="{{ username }}">
+                <input type="hidden" name="recipe" value="{{ recipe.title }}">
+            </form>
+            <form action="/userdata" method="GET">
+                <input type="hidden" id="user_name" name="user_name" value="{{ username }}">
+                <button type="submit">Return To Saved Recipes</button>
+            </form>
+        </div>
+        {%else%}
+            <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
+        {% endif %}
 </div>
 
 <div id="recipe-items">
@@ -33,11 +45,15 @@
     
             <div class="instruct-left">
                 <h3><b><u>Instructions</u></b></h3>
-                {% set instructions = recipe.instructions.split('. ') %}
-                {% for instruction in instructions %}
-                    {% set index = loop.index %}
-                    <b>{{ index }}.</b> {{ instruction }}<br><br>
-                {% endfor %}
+                {% if recipe.instructions %}
+                    {% set instructions = recipe.instructions.split('. ') %}
+                    {% for instruction in instructions %}
+                        {% set index = loop.index %}
+                        <b>{{ index }}.</b> {{ instruction }}<br><br>
+                    {% endfor %}
+                {% else %}
+                    None were found.
+                {% endif %}
             </div>
             
             <div class="ingredient-list">
