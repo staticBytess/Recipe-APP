@@ -16,3 +16,4 @@ soupsieve==2.5
 spoonacular==3.0
 urllib3==2.2.1
 Werkzeug==3.0.2
+gunicorn==22.0.0
