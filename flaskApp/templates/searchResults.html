@@ -4,11 +4,13 @@
     {% endblock title %}
     {% block content %}
 
-    <h1>PantryPal</h1>
+    <h1>BugBashers</h1>
     <h3>Search By {{selection}}</h3>
-    <ul>
+    <return-home></return-home>
+    <br><br><br><br>
+    <ul class = "listRecipes">
         {% for recipe in recipeList %}
-            <p>
+            <p1>
                 <h3>{{ recipe.title }}</h3>
                 <img src="{{ recipe.image }}" alt="No Image Available" width="200">
                 <form action="/view" method="POST">
@@ -18,10 +20,10 @@
                 </form>
                 <a href="/addFave?value={{ recipe.id }}"><button type="submit">Add to Favorites</button></a>
                 
-            </p>
+            </p1>
         {% endfor %}
 
     </ul>
-    <return-home></return-home>
+    <br><br><br><br><br>
     
     {% endblock content %}
