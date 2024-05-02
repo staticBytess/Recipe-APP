@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/signup.css">
+    <title>Signup Form</title>
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <div class="wrapper">
+                    <form action="/createAccount" method="GET">
+                        <h1>Register</h1>
+                        <div class="social-icons">
+                            <a href="https://www.instagram.com/">
+                                <img src="../static/social media icons/ig.JPG">
+                            </a>
+                            <a href="https://www.facebook.com/">
+                                <img src="../static/social media icons/fb.JPG">
+                            </a>
+                            <a href="https://www.twitter.com/">
+                                <img src="../static/social media icons/twitter.JPG">
+                            </a>
+                        </div>
+                        <label for="username">Username:</label>
+                        <input type="text" class="input-field" required id="user_name" name="user_name">
+                        <label for="email">Email:</label>
+                        <input type="email" class="input-field" id="email" name="email" required>
+                        <label for="password">Password:</label>
+                        <input type="password" class="input-field" id="password" name="password" required>
+                        <button type="submit" class = "submit-btn">Sign Up</button>
+                        {% if error %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="login-box">
+            
+        </div>
+    </div>
+</body>
+</html>

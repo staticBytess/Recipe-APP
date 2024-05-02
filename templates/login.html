@@ -5,42 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In Page</title>
-    <link rel="stylesheet" href="static/style1.css">
-
-
-    <p>
-    <form action="/userdata" method="GET">
-        <label for="User">Username:</label>
-        <input type="text" required id="user_name" name="user_name">
-        <label for="Password">Password:</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Submit</button>
-    </form>
-
-    </p>
-
-
+    <link rel="stylesheet" href="../static/login.css">
+      <form action="userdata.html" method="GET"></form>
 </head>
+ 
 
 <body>
     <div class="hero">
-
+       
             <div class="form-box">
-            <div class= "button-box">
-                <div id = "btn"></div>
-                <button type = "button" class = "toggle-btn">Register</button>
-                <button type = "button" class = "toggle-btn">Log In</button>
+                <div class= "button-box">
+                   
+                <div class = "wrapper">
+                    <form action = "">
+                        <h1> Login</h1> 
+                    </form>
+                </div>
+                   
             </div>
-            <div class = "social-icons">
-                <img src = "static/social media icons/ig.JPG">
-                <img src = "static/social media icons/fb.JPG">
-                <img src = "static/social media icons/twitter.JPG" >
+            <div id="login-box">
+                <div class = "social-icons">
+                    <a href="https://www.instagram.com/">
+                    <img src = "../static/social media icons/ig.JPG"></a>
+                    
+                    <a href="https://www.facebook.com/">
+                    <img src = "../static/social media icons/fb.JPG"></a>
+                    
+                    <a href="https://www.twitter.com/">
+                    <img src = "../static/social media icons/twitter.JPG" ></a>
+                </div> 
+            <form action="/userdata" method="GET">
+                <label for="User">Username:</label>
+                <input type="text" class = "input-field" required id="user_name" name="user_name">
+                <br>
+                <label for="Password">Password:</label>
+                <input type="password" class = "input-field" id="password" name="password">
+                <br>
+
+                <button type="submit"  class = "submit-btn" >Submit</button>
+                <div class = "register-link">
+                    <p>Don't have an account? <a href = "/signup"> Register</a></p>
+                </div>
+                {% if error %}
+                <p style="color: red;">{{ error }}</p>
+                {% endif %}
+            </form>
             </div>
+
+
         </div>
         
     </div>
-</body>
-
-<return-home></return-home>
-
+    
+    </body>
 </html>

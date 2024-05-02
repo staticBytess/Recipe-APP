@@ -5,42 +5,46 @@
 {% endblock title %}
 
 {% block content %}
-    
-    <h1>Edit Recipe</h1>
+
     <div id="update-form">
+        <h1>Edit Recipe</h1>
+        <hr>
         <form action="/updateRecipe" method="POST">
             <label for="id">Recipe ID: </label>
             <input type="hidden" name="username" value="{{username}}">
             <input type="hidden" id="original_title" name="original_title">
-            <input type="text" name="id" value="{{ recipe.id }}"><br>
+            <input type="text" name="id" value="{{ recipe.id }}"><br><br>
 
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="{{ recipe.title }}"><br>
+            <input type="text" id="title" name="title" value="{{ recipe.title }}"><br><br>
         
-            <label for="image">Image URL:</label>
-            <textarea type="text" id="image" name="image"></textarea><br>
+            <label for="image">Image URL:  </label>
+            <textarea type="text" id="image" name="image" rows="5" cols="90"></textarea>
+            <br><br>
 
             <label for="website">Website URL:</label>
-            <input type="text" id="website" name="website" value="{{ recipe['website'] }}" size="50px"><br>
+            <input type="text" id="website" name="website" value="{{ recipe['website'] }}" size="50px"><br><br>
             
             <label for="vegetarian">Vegetarian:</label>
-            <input type="text" id="vegetarian" name="vegetarian" value="{{ recipe.vegetarian }}"><br>
+            <input type="text" id="vegetarian" name="vegetarian" value="{{ recipe.vegetarian }}"><br><br>
         
             <label for="vegan">Vegan:</label>
-            <input type="text" id="vegan" name="vegan" value="{{ recipe.vegan }}"><br>
+            <input type="text" id="vegan" name="vegan" value="{{ recipe.vegan }}"><br><br>
         
             <label for="glutenFree">Gluten Free:</label>
-            <input type="text" id="glutenFree" name="glutenFree" value="{{ recipe.glutenFree }}"><br>
+            <input type="text" id="glutenFree" name="glutenFree" value="{{ recipe.glutenFree }}"><br><br>
         
-            <label for="summary">Summary:</label>
-            <textarea type="text" id="summary" name="summary"></textarea><br>
+            <label for="summary">Summary:  </label>
+            <textarea type="text" id="summary" name="summary" rows="5" cols="90"></textarea>
+            <br><br>
         
-            <label for="ingredients">Ingredients:</label>
-            <textarea id="ingredients" rows="4"
-                name="ingredients">{% for ingredient in recipe.ingredients %}{{ ingredient }}{% if not loop.last %} + {% endif %}{% endfor %}</textarea><br>
+            <label for="ingredients">Ingredients:  </label>
+            <textarea id="ingredients" name="ingredients" rows="5" cols="90">{% for ingredient in recipe.ingredients %}{{ ingredient }}{% if not loop.last %} + {% endif %}{% endfor %}</textarea>
+            <br><br>
 
             <label for="instructions">Instructions:</label>
-            <textarea id="instructions" name="instructions">{{ recipe.instructions }}</textarea><br><br>
+            <textarea id="instructions" name="instructions" rows="5" cols="90">{{ recipe.instructions }}</textarea>
+            <br><br>
             
             <button type="submit">Save Changes</button>
         </form>

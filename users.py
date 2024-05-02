@@ -5,7 +5,8 @@ import pprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import getpass
-import re
+from flask_bcrypt import Bcrypt
+
 
 client = MongoClient('mongodb+srv://davidV:p6Vk8G8s!5g.23X@atlascluster.1m2wekf.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster')
 
@@ -58,24 +59,28 @@ def addRecipe(username, data, _id=0):
 #     collection.insert_one(recipe)
 
 
-def checkUser():
+def checkUser(username, password):
+    key =""
+    passcheck = False
+    #checks id username exists in database
+    db_list = client.list_database_names()
+    check = username in db_list
+    if check:
+        db = client[username]
+        
+        collection = db["password"]
 
-    userName = input("Username: ")
-    password = getpass.getpass(prompt="Enter your password: ")
+        first_document = collection.find_one()
+        key = first_document['_id']
+        bcrypt = Bcrypt()
+        passcheck = bcrypt.check_password_hash(key,password)
 
- 
-    with open('accounts.txt', 'r') as file:
-        # Read the file line by line
-
-        for line in file:
-            if not line:
-                break
-            
-            name, passkey = line.split()
-
-            if userName == name and password==passkey:
-                print("Account Found")
-    return userName
+    if passcheck:
+        return check
+    else:
+        check = False
+        
+    return check
                 
 
 def addUser():
@@ -145,3 +150,4 @@ def document_exists_for_date(name):
     db = client['recipeoftheday']
     collection = db['favorites']
     return collection.find_one({'_id': name}) is not None
+
